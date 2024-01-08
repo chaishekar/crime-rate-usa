@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.335">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>introduction</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-fixed fullcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./index.html">
+ <span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link active" href="./introduction.html" aria-current="page">
+ <span class="menu-text">Introduction</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://github.com/anly501/anly-501-project-chaishekar/tree/main/code">
+ <span class="menu-text">Code</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://github.com/anly501/anly-501-project-chaishekar/tree/main/data">
+ <span class="menu-text">Data</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./data_gathering.html">
+ <span class="menu-text">Data Gathering</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./data_cleaning.html">
+ <span class="menu-text">Data Cleaning</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./exploring_data.html">
+ <span class="menu-text">Exploring Data</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-naive-bayes" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Naive Bayes</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-naive-bayes">    
+        <li>
+    <a class="dropdown-item" href="./nbrd.html">
+ <span class="dropdown-text">Record Data</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./nbtd.html">
+ <span class="dropdown-text">Text Data</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="./dt.html">
+ <span class="menu-text">Decision Trees</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./svm.html">
+ <span class="menu-text">SVM</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-clustering" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Clustering</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-clustering">    
+        <li>
+    <a class="dropdown-item" href="./crd.html">
+ <span class="dropdown-text">Record Data</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./ctd.html">
+ <span class="dropdown-text">Text Data</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="./arm.html">
+ <span class="menu-text">ARM and Clustering</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./conclusion.html">
+ <span class="menu-text">Conclusion</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+
+
+
+
+
+
+
+
+<title>introduction</title>
+
+
+<style type="text/css">
+  body {
+  font-family:'times new roman';
+  background-image: ;
+  background-color: black;
+
+}s
+    .main-container {
+      max-width: 940px;
+      margin-left: auto;
+      margin-right: auto;
+      background-color: black;
+    }
+
+    img {
+    float: right;
+    border: 1px dotted black;
+    margin: 0px 0px 15px 20px;
+}
+    img {
+      max-width:100%;
+    }
+    .tabbed-pane {
+      padding-top: 12px;
+    }
+    .html-widget {
+      margin-bottom: 0px;
+    }
+    button.code-folding-btn:focus {
+      outline: none;
+    }
+    summary {
+      display: list-item;
+    }
+    details > summary > p:only-child {
+      display: inline;
+    }
+    pre code {
+      padding: 0;
+    }
+    
+    </style>
+    
+  
+    
+    <div class="container-fluid main-container">
+    
+    <div id="header">
+    
+    <div style="margin-left: 10px; margin-right: 10px;" id="introduction" class="section level1">
+    <h1 style="color:white">INTRODUCTION</h1>
+    <p style="color:white"> <img src="https://fullfact.org/media/_versions/category-crime-domestic-violence_homepage_article.jpg" width="250" height="250">Would you say that you have ever been a victim of crime? Can you think of someone who has been a victim of crime? How often do you think about safeguarding yourself and your possessions? You are probably still reading this because, even if you responded no to all of these questions, you are still interested in finding out how crime might be minimized.
+    </p><p style="color:white">The United States has one of the highest crime rates in the entire globe. Some offenders are imprisoned while others are free. There are laws and prisons in place to punish offenders, just like in any other nation. There is usually a large number of inmates housed in American prisons. For as long as there have been norms about how people should live and participate in society, crime has been an issue in America. Criminological trends have ebbed and flowed throughout history, much like ocean waves, complete with troughs and crests that can be easily identified. The incidence of crime tends to grow whenever something truly momentous happens in history. Most people in the United States believe crime rates have been rising over the past few decades. Criminologist public reports form the basis of this view. Crime rates and the efficiency of the laws that regulate our society are heavily measured using statistical data. National crime reports are the product of this data collection and analysis. Our societal legal framework has been improved thanks to these reports' implementation.
+    </p><p style="color:white">Criminal acts can be broken down into a few broad categories, including but not limited to crimes against persons, crimes against property, incipient crimes, statutory crimes, and financial crimes.</p>
+    <p></p>
+    <p style="color:white">Rape, robbery, arson, vehicle theft, etc., have all become disturbingly commonplace news items in the area. Communities in the United States are increasingly hospitable to various types of criminals. The government has spent a lot of money fighting crime, but the crime rate still seems high. As a result, crime has been an issue the American government has worked to resolve for many years. Nothing good can come from a government dominated by attorneys, especially given the state of corruption in law enforcement. So it may be argued that domestic terrorism is a bigger threat to the United States than international terrorism.</p>
+    <p style="color:white">Anxiety and fear have increased as a result of the high crime rates in the United States. Families in the United States are living in fear, and residents are reluctant to venture out at night for fear of being raped or attacked by criminals. A lot of people are upset about this because they want the killings and rapes that have been happening at an alarming rate to stop. Drugs are a contributing factor to criminal activity, which has been a headache for law enforcement for decades. In practically every middle-class area, drugs are being marketed, and the most worrisome aspect of this is that drug peddlers are increasingly employing students as a means of reaching young consumers. Since many young people who try drugs for the first time become delinquent and are eventually introduced to the criminal world, this has contributed significantly to a rise in crime rates across the United States. Young people's participation in drug trafficking not only causes academic disruption in the event of arrest, but also makes them less competitive job candidates. It's for this reason that most drug-addicted youth end up in criminal careers. These realities have caused American parents to constantly worry about the safety of their children and to take preventative steps like keeping a careful check on their kids to ward off potential rapists, kidnappers, or drug traffickers.</p>
+    <p style="color:white">Additionally, homicide is epidemic in American communities. According to estimates, a murder occurs every 30 minutes somewhere in the United States (Drehle, 2010, p. 1). In order to commit armed robberies, criminals have access to illegal weapons. Homicide rates in our communities have gone up alongside the number of firearms in criminal hands, since armed robbers are now more likely to take the lives of their victims if they have reason to believe that their victims may be able to provide useful information in police investigations. Property crimes like arson, car theft, etc., are also quite widespread in our area. Communities across the United States are also experiencing an increase in hate crimes. Disparities of race, sexual orientation, religion, etc., serve as their inspiration. Such crimes, most of which are motivated by sexual orientation, are unfortunately widespread in universities and colleges. Outside of the college campuses, racial tensions are the leading cause of hate crimes in the surrounding communities.</p>
+    <p style="color:white">No one knows for certain that there is just one way to stop criminal activity, which complicates the task of developing and implementing effective crime prevention techniques. Some theorists believe a serious war on drugs could have a positive effect on the fight against crime, and police have long held the view that better police work could help bring crime rates down. Meanwhile, demographists and those advocating for strategic changes in a community's demographics have also argued that such measures would be helpful. Finally, supporters of the Clinton and Bush administrations have advocated for the hiring of additional police officers to address the problem. One economist, Steven Levitt, thinks that the legalization of abortion significantly lowered the number of violent criminals in the United States. His main point was that undesired children born in the 1980s grew up to commit crimes in the 1990s (Anderson, 2010, p. 1). All the above points have merit, but ultimately, it will take a mix of measures, including a reduction in prison populations, to win the war on crime. It's common knowledge that more offenders will be locked up if more prisons are built to relieve the issue of jail overcrowding. Incarcerating these offenders will improve their communities by making everyone there feel safer, especially those who are closest to them.</p>
+    <p style="color:white">Since the subject of crime holds a great deal of fascination for me, I intend to use this investigation of the crime rate in the United States to answer the following questions:</p>
+    <p style="color:white">● Where in the United States may people expect the highest crime rates?</p>
+    <p style="color:white">● In what ways has crime increased recently? </p>
+    <p style="color:white">● What kinds of criminal activity can be expected in the various parts of the country?</p>
+    <p style="color:white">● How are crime location and crime types related?</p>
+    <p style="color:white">● Which part of the year do crime rate increase?</p>
+    <p style="color:white">● Which is the worst type of crime?</p>
+    <p style="color:white">● Who is targeted the most among men, women, and children?</p>
+    <p style="color:white">● Can we get a sense of what people believe about criminality??</p>
+    <p style="color:white">● Does race affect the rate of crime?</p>
+    <p style="color:white">● Which type of crime, person or society, is most impacted??</p>
+    
+
+    </div>
+    
+    </div>
+
+
+
+</div></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

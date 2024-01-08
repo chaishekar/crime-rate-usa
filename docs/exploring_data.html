@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.335">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>exploring_data</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+</head>
+
+<body style="background-color: black;" class="nav-fixed fullcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./index.html">
+ <span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./introduction.html">
+ <span class="menu-text">Introduction</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://github.com/anly501/anly-501-project-chaishekar/tree/main/code">
+ <span class="menu-text">Code</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://github.com/anly501/anly-501-project-chaishekar/tree/main/data">
+ <span class="menu-text">Data</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./data_gathering.html">
+ <span class="menu-text">Data Gathering</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./data_cleaning.html">
+ <span class="menu-text">Data Cleaning</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link active" href="./exploring_data.html" aria-current="page">
+ <span class="menu-text">Exploring Data</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-naive-bayes" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Naive Bayes</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-naive-bayes">    
+        <li>
+    <a class="dropdown-item" href="./nbrd.html">
+ <span class="dropdown-text">Record Data</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./nbtd.html">
+ <span class="dropdown-text">Text Data</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="./dt.html">
+ <span class="menu-text">Decision Trees</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./svm.html">
+ <span class="menu-text">SVM</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-clustering" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Clustering</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-clustering">    
+        <li>
+    <a class="dropdown-item" href="./crd.html">
+ <span class="dropdown-text">Record Data</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./ctd.html">
+ <span class="dropdown-text">Text Data</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="./arm.html">
+ <span class="menu-text">ARM and Clustering</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./conclusion.html">
+ <span class="menu-text">Conclusion</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+
+
+
+
+
+
+
+    <meta charset="utf-8">
+    <meta name="generator" content="pandoc">
+    <meta http-equiv="X-UA-Compatible" content="IE=EDGE">
+    <!-- Point to CSS stylesheet -->
+    <link rel="stylesheet" href="../styles.scss">
+    <style>
+        body {
+            font-family: 'Times New Roman';
+            background-color: white;
+            margin: 0; /* Remove default margin */
+            padding: 0; /* Remove default padding */
+        }
+    </style>
+
+
+
+    <style>
+        body {
+            font-family: 'Times New Roman';
+            background-color: white;
+            position: relative;
+        }
+
+        .navbar {
+            top: 0;
+            position: fixed;
+            width: 100%;
+        }
+
+        .topnav {
+            overflow: hidden;
+            background-color: black;
+        }
+
+        .topnav a {
+            float: left;
+            color: white;
+            text-align: center;
+            padding: 12px 14px;
+            text-decoration: none;
+            font-size: 17px;
+        }
+
+        .topnav a:hover {
+            background-color: black;
+            color: white;
+        }
+
+        .topnav a.active {
+            background-color: black;
+            color: black;
+        }
+
+        .headerLogo {
+            top: 200px;
+            height: 250px;
+            width: 200px;
+            line-height: 200px;
+            overflow: hidden;
+        }
+
+        .center {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            width: 100%;
+        }
+
+        h1 {
+            text-align: left;
+            font-family: 'Times New Roman';
+        }
+
+        p,
+        div {
+            text-align: left;
+        }
+
+        ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: white;
+            max-width: 1500px;
+        }
+
+        li {
+            float: left;
+        }
+
+        li a,
+        .dropbtn {
+            display: inline-block;
+            color: black;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+
+        li a:hover,
+        .dropdown:hover .dropbtn {
+            background-color: grey;
+        }
+
+        li.dropdown {
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: white;
+            min-width: 160px;
+        }
+
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            text-align: left;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+            opacity: 1;
+        }
+
+        td {
+            padding: 5px;
+            text-align: left;
+            width: 500px;
+        }
+
+        tr {
+            padding: 0px;
+            text-align: top;
+            background-color: #ffffff;
+        }
+
+        img:hover {
+            opacity: 1;
+        }
+
+        th,
+        td {
+            border: 1px solid black;
+        }
+
+        .center {
+            margin-left: 0px;
+            margin-right: 0px;
+        }
+
+        table,
+        th,
+        td {
+            border: 1px solid black;
+        }
+
+        table.center {
+            margin: 0px; /* Center the table horizontally */
+            width: 100%; /* 100% width of the parent container */
+        }
+    </style>
+
+    <div class="w3-container w3-border city" id="Data Gathering">
+        <br>
+        <br>
+
+        <style>
+            th, td {
+                border: 1px solid black;
+            }
+            .center {
+                margin-left: 0px;
+                margin-right: 0px;
+            }
+        </style>
+        <div style="margin-left: 10px; margin-right: 10px;">
+           <h1 style="color:white"><b> EXPORING DATA</b></h1>
+           <p style="color:white">Exploring data&nbsp;is the visual depiction of data and information. Through the use of visual components such as charts, graphs, and maps, data visualization tools facilitate the identification and comprehension of trends, outliers, and patterns in data. In addition, it provides a good method for employees and business owners to deliver information to non-technical audiences without causing confusion.</p>
+           <p style="color:white">Exploring data&nbsp;tools and technologies are vital in the realm of Big Data for analyzing enormous volumes of information and making data-driven decisions.</p>
+           <p style="color:white">Providing information in a graphical manner may appear to have no disadvantages. But sometimes data might be misconstrued or misread when visualized using the incorrect technique. When deciding to develop a data visualization, it is best to consider both the benefits and drawbacks.</p>
+           <h4 style="color:white" class="anchored">Advantage of Exploring data:</h4>
+           <p style="color:white">● Quickly comprehend information:</p>
+           <p style="color:white">Organisations may examine vast volumes of data in simple, unified ways by using graphical representations of business information - and derive inferences from that information. Furthermore, because examining information in graphical format is substantially faster than analyzing information in spreadsheets, firms may handle problems or answer inquiries in a more timely manner.</p>
+           <p style="color:white">● Recognize linkages and patterns:</p>
+           <p style="color:white">When presented visually, even large volumes of complex data begin to make sense; organizations may identify parameters that are highly connected. Some of the connections will be clear, while others will not. Identifying such linkages allows companies to focus on areas that are most likely to have an impact on their most important goals.</p>
+           <p style="color:white">● Identify emerging trends:</p>
+           <p style="color:white">Using data visualization to detect patterns - both in the business and in the market - can provide firms with a competitive advantage and eventually effect the bottom line. It is simple to identify outliers that affect product quality or customer attrition and address concerns before they become major issues.</p>
+           <p style="color:white">● Share the story with others.</p>
+           <p style="color:white">Once a business has used visual analytics to find new insights, the next step is to share those insights with other people. In this step, it's important to use charts, graphs, or other visually striking ways to show data because it's interesting and gets the message across quickly.</p>
+           <h4 style="color:white" class="anchored">Disadvantage of Exploring data:</h4>
+           <p style="color:white">● Inaccurate or biased information.</p>
+           <p style="color:white">● Not always does correlation imply causation.</p>
+           <p style="color:white">● Messages of significance might be lost in translation.</p>
+           <h4 style="color:white" class="anchored">Importance of Exploring data:</h4>
+           <p style="color:white">The significance of data exploration is straightforward: it enables individuals to see, interact with, and better comprehend data. Regardless of their degree of knowledge, the correct visualization can bring everyone on the same page, whether the information is basic or complex.</p>
+           <h4 style="color:white" class="anchored">Setting the stage for visualizing data:</h4>
+           <p style="color:white">● Know the size and number of rows and columns of the data you want to display (the uniqueness of data values in a column).</p>
+           <p style="color:white">● Figure out what you want to show and what kind of information you want to share.</p>
+           <p style="color:white">● Understand your audience and how they process visual information.</p>
+           <p style="color:white">● Utilize a visual that effectively and simply conveys the information to your audience.</p>
+           <h4 style="color:white" class="anchored">Choosing which visual is the best:</h4>
+           <p style="color:white">One of the most difficult tasks for business users is determining which visual will best portray the information. SAS Visual Analytics utilizes intelligent autocharting to provide the optimal visual depending on the selected data.&nbsp; When exploring a new data collection for the first time, autocharts are particularly beneficial because they provide a fast overview of vast volumes of data. This data exploration feature is beneficial for even seasoned statisticians seeking to accelerate the analytics lifecycle process, since it eliminates the need for recurrent sampling to establish which data is suitable for each model.</p>
+           </div>
+           <style>
+           table, th, td {
+           border: 1px solid black;
+           }
+           table.center {
+           margin: 0px; /* Center the table horizontally */
+           width: 100%; /* 100% width of the parent container */
+           }
+           </style>
+           <table style="width:100%">
+           <tbody>
+           <tr>
+           <th>Exploring Data with Python</th>
+           <th>Exploring Data with R</th>
+           </tr>
+           <tr>
+            <td width="50%"><center><img alt="Python_wordcloud_crime" height="500px" src="./images/VISUALISATION_WORDCLOUD_CRIME_TEXT_DATA.png" width="550px"></center>
+            <br>
+            <center><a href="./images/VISUALISATION_WORDCLOUD_CRIME_TEXT_DATA.png" target="new">View </a></center>
+            <center><a href="https://github.com/anly501/anly-501-project-chaishekar/tree/main/code/exploring data/visualisation_crime_text_data.html">View Code and Visualization</a></center>
+            <a href="./images/VISUALISATION_WORDCLOUD_CRIME_TEXT_DATA.png" target="new"> </a>
+            <center>The word cloud of Twitter data reveals the most common context in which #crime is used. Words like "investigate" and "homicide" are also common, giving some idea of the context in which individuals are using the hashtag. </center> 
+            
+            </td><td width="50%"><center><img alt="DIST" height="500px" src="./images/VISUALISATION_DIST_OFFENSE_CRIME_RECORD_DATA.png" width="550px"></center>
+            <br>
+            <center><a href="./images/VISUALISATION_DIST_OFFENSE_CRIME_RECORD_DATA.png" target="new">View </a></center>
+            <center><a href="https://github.com/anly501/anly-501-project-chaishekar/tree/main/code/exploring data/visulisation_crime_against_record_data.html">View Code and Visualization</a></center>
+            <a href="./images/VISUALISATION_DIST_OFFENSE_CRIME_RECORD_DATA.png" target="new"> </a>
+            <center> There are numerous crimes occurring around us for a variety of reasons, and the above bar graph depicts the distribution of crime against people and society.</center> 
+            
+            
+        </td></tr>
+        <tr>
+            <td><center><img alt="Python_Age_Group" height="400px" src="./images/VISUALISATION_AGE_GROUP_AGE_RECORD_DATA.png" width="500px"></center>
+            <br>
+            <center><a href="./images/VISUALISATION_AGE_GROUP_AGE_RECORD_DATA.png" target="new">View </a></center>
+            <center><a href="https://github.com/anly501/anly-501-project-chaishekar/tree/main/code/exploring data/visualisation_age_crime_record_data.html">View Code and Visualization</a></center>
+            <a href="./images/VISUALISATION_AGE_GROUP_AGE_RECORD_DATA.png" target="new"> </a>
+
+            <center> As shown in the accompanying line graph, there is a positive correlation between age and the number of crimes; as age increases, so does the crime rate. </center> 
+            
+            </td><td width="50%"><center><img alt="TOP_5_STATE" height="500px" src="./images/VISUALISATION_TOP_5_STATEWISE_OFFENSE_RECORD_DATA.png" width="550px"></center>
+                <br>
+                <center><a href="./images/VISUALISATION_TOP_5_STATEWISE_OFFENSE_RECORD_DATA.png" target="new">View </a></center>
+                <center><a href="https://github.com/anly501/anly-501-project-chaishekar/tree/main/code/exploring data/visulisation_crime_against_record_data.html">View Code and Visualization</a></center>
+                <a href="./images/VISUALISATION_TOP_5_STATEWISE_OFFENSE_RECORD_DATA.png" target="new"> </a>
+                <center>The above bar graph compares the five states in the United States that have the highest rate of crime corresponding to their type of offense. </center> 
+                
+            </td>
+        </tr>
+        
+        <tr>
+            <td><center><img alt="Python_10_Offenses" height="400px" src="./images/VISUALISATION_TOP_LEAST_10_OFFENSES_AGE_RECORD_DATA.png" width="500px"></center>
+            <br>
+            <center><a href="./images/VISUALISATION_TOP_LEAST_10_OFFENSES_AGE_RECORD_DATA.png" target="new">View </a></center>
+            <center><a href="https://github.com/anly501/anly-501-project-chaishekar/tree/main/code/exploring data/visualisation_age_crime_record_data.html">View Code and Visualization</a></center>
+            <a href="./images/VISUALISATION_TOP_LEAST_10_OFFENSES_AGE_RECORD_DATA.png" target="new"> </a>
+
+            <center> The graphs that are above tell us about the top 10 and least 10 crimes, and as we can see, drug abuse and property crimes are two of those that are in the top 10. However, robbery and gambling fall under the least 10 category, despite the fact that these are two crimes that are fairly common according to our knowledge, so we can imagine how significant the proportional impact of the top crimes will be.</center> 
+            </td>
+            <td width="50%"><center><img alt="CRIME_CATEGORY" height="500px" src="./images/VISUALISATION_CRIME_CATEGORY_OFFENSE_RECORD_DATA.png" width="550px"></center>
+                <br>
+                <center><a href="./images/VISUALISATION_CRIME_CATEGORY_OFFENSE_RECORD_DATA.png" target="new">View </a></center>
+                <center><a href="https://github.com/anly501/anly-501-project-chaishekar/tree/main/code/exploring data/visulisation_crime_against_record_data.html">View Code and Visualization</a></center>
+                <a href="./images/VISUALISATION_CRIME_CATEGORY_OFFENSE_RECORD_DATA.png" target="new"> </a>
+                <center> The crime rate for each category of crime, including crimes against people and crimes against society, is displayed in the line graph that can be found above. </center> 
+                
+            
+            </td>
+        </tr>
+        <tr>
+            <td><center><img alt="Python_5_Offenses" height="400px" src="./images/VISUALISATION_TOP_5_LEAST_AGE_CRIME_RECORD_DATA.png" width="500px"></center>
+            <br>
+            <center><a href="./images/VISUALISATION_TOP_5_LEAST_AGE_CRIME_RECORD_DATA.png" target="new">View </a></center>
+            <center><a href="https://github.com/anly501/anly-501-project-chaishekar/tree/main/code/exploring data/visualisation_age_crime_record_data.html">View Code and Visualization</a></center>
+            <a href="./images/VISUALISATION_TOP_5_LEAST_AGE_CRIME_RECORD_DATA.png" target="new"> </a>
+
+            <center>he multiple bar graphs above show the most and least common offenses committed by people in each age category; as can be seen, all of these crimes disproportionately affect the elderly. </center> 
+            </td>
+            <td width="50%"><center><img alt="POPULATION_OFFENSE" height="500px" src="./images/VISUALISATION_POPULATION_OFFENSE_CRIME_RECORD_DATA.png" width="550px"></center>
+                <br>
+                <center><a href="./images/VISUALISATION_POPULATION_OFFENSE_CRIME_RECORD_DATA.png" target="new">View </a></center>
+                <center><a href="https://github.com/anly501/anly-501-project-chaishekar/tree/main/code/exploring data/visulisation_crime_against_record_data.html">View Code and Visualization</a></center>
+                <a href="./images/VISUALISATION_POPULATION_OFFENSE_CRIME_RECORD_DATA.png" target="new"> </a>
+                <center>The scatter plot indicates that the population and crime rate are positively correlated. </center> 
+                
+            
+              </td>
+          </tr>
+      <tr>
+        <td width="50%"><center><img alt="Python_state_crime" height="500px" src="./images/VISUALISATION_CRIMERATE_YEAR_STATE_RECORD_DATA.png" width="550px"></center>
+        <br>
+        <center><a href="./images/VISUALISATION_CRIMERATE_YEAR_STATE_RECORD_DATA.png" target="new">View </a></center>
+              <center><a href="https://github.com/anly501/anly-501-project-chaishekar/tree/main/code/exploring data/visualization_state_crime_record_data.html">View Code and Visualization</a></center>
+        <a href="./images/VISUALISATION_CRIMERATE_YEAR_STATE_RECORD_DATA.png" target="new"> </a>
+        <center>The above line graph demonstrates that the property crime rate is larger than the violent crime rate, but has been declining gradually since the late 1990s.</center> 
+        
+        </td><td width="50%"><center><img alt="" height="500px" src="./images/VISUALISATION_OFFENDER_RACE_HATE_CRIME_RECORD_DATA.png" width="550px"></center>
+        <br>
+        <center><a href="./images/VISUALISATION_OFFENDER_RACE_HATE_CRIME_RECORD_DATA.png" target="new">View </a></center>
+              <center><a href="https://github.com/anly501/anly-501-project-chaishekar/tree/main/code/exploring data/visualisation_hate_crime_record_data.html">View Code and Visualization</a></center>
+        <a href="./images/VISUALISATION_OFFENDER_RACE_HATE_CRIME_RECORD_DATA.png" target="new"> </a>
+        <center>The above donut pie chart shows that the rate of White's is higher than that of other races, although most of the races weren't known. This is followed by the rate of Black or African American people.</center> 
+        
+        </td>
+      </tr>
+      <tr>
+        <td width="50%"><center><img alt="Python_state_crime_prop_violence" height="500px" src="./images/VISUALISATION_DENSITY_STATE_RECORD_DATA.png" width="550px"></center>
+        <br>
+        <center><a href="./images/VISUALISATION_DENSITY_STATE_RECORD_DATA.png" target="new">View </a></center>
+              <center><a href="https://github.com/anly501/anly-501-project-chaishekar/tree/main/code/exploring data/visualization_state_crime_record_data.html">View Code and Visualization</a></center>
+        <a href="./images/VISUALISATION_DENSITY_STATE_RECORD_DATA.png" target="new"> </a>
+        <center>The density plot for property crime rate and violent crime rate indicates that motor crime is more prevalent in property crime, while assault is more prevalent in violent crime. </center> 
+        
+        </td><td width="50%"><center><img alt="" height="500px" src="./images/VISUALISATION_MONTHWISE_HATE_CRIME_RECORD_DATA.png" width="550px"></center>
+        <br>
+        <center><a href="./images/VISUALISATION_MONTHWISE_HATE_CRIME_RECORD_DATA.png" target="new">View </a></center>
+              <center><a href="https://github.com/anly501/anly-501-project-chaishekar/tree/main/code/exploring data/visualisation_hate_crime_record_data.html">View Code and Visualization</a></center>
+        <a href="./images/VISUALISATION_MONTHWISE_HATE_CRIME_RECORD_DATA.png" target="new"> </a>
+        <center>The above bar chart shows that December has the lowest crime rate in the United States, while September and October have the highest.</center> 
+        
+        </td>
+      </tr>
+        
+    </tbody>
+</table>
+</div>
+
+
+
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

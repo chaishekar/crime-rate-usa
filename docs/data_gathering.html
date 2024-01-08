@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.335">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>data_gathering</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+</head>
+
+<body style="background-color: black;" class="nav-fixed fullcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./index.html">
+ <span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./introduction.html">
+ <span class="menu-text">Introduction</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://github.com/anly501/anly-501-project-chaishekar/tree/main/code">
+ <span class="menu-text">Code</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://github.com/anly501/anly-501-project-chaishekar/tree/main/data">
+ <span class="menu-text">Data</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link active" href="./data_gathering.html" aria-current="page">
+ <span class="menu-text">Data Gathering</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./data_cleaning.html">
+ <span class="menu-text">Data Cleaning</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./exploring_data.html">
+ <span class="menu-text">Exploring Data</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-naive-bayes" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Naive Bayes</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-naive-bayes">    
+        <li>
+    <a class="dropdown-item" href="./nbrd.html">
+ <span class="dropdown-text">Record Data</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./nbtd.html">
+ <span class="dropdown-text">Text Data</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="./dt.html">
+ <span class="menu-text">Decision Trees</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./svm.html">
+ <span class="menu-text">SVM</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-clustering" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Clustering</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-clustering">    
+        <li>
+    <a class="dropdown-item" href="./crd.html">
+ <span class="dropdown-text">Record Data</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./ctd.html">
+ <span class="dropdown-text">Text Data</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="./arm.html">
+ <span class="menu-text">ARM and Clustering</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./conclusion.html">
+ <span class="menu-text">Conclusion</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+
+
+
+
+
+
+
+
+<meta charset="utf-8">
+<meta name="generator" content="pandoc">
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE">
+   <!-- point to css stylesheet -->
+   <link rel="stylesheet" href="../styles.css">
+
+   
+  
+  
+  
+  <style>
+  
+  body {
+    font-family: 'Times New Roman';
+      background-color : white ;
+      position : relative
+      style: #232435;
+  
+  }
+  
+  
+  .navbar{
+      top:0;
+      position: fixed;
+      width : 100%;
+      
+  }
+  
+  .topnav {
+    overflow: hidden;
+    background-color: black;
+  }
+  
+  .topnav a {
+    float: left;
+    color: white;
+    text-align: center;
+    padding: 12px 14px;
+    text-decoration: none;
+    font-size: 17px;
+  }
+  
+  .topnav a:hover {
+    background-color: black;
+    color: white;
+  }
+  
+  .topnav a.active {
+    background-color: black;
+    color: black;
+  }
+  
+  .headerLogo{
+    top:200px;
+    height:250px;
+    width:200px;
+    line-height:200px;
+  
+    overflow:hidden;
+   
+   
+  }
+  .center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+  }
+  
+  h1 {text-align: left;}
+  p {text-align: left;}
+  div {text-align: left;}
+  
+  
+  ul {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      background-color: white;
+      max-width:1500px;
+  }
+  
+  li {
+      float: left;
+  }
+  
+  li a, .dropbtn {
+      display: inline-block;
+      color: black;
+      text-align: center;
+      padding: 14px 16px;
+      text-decoration: none;
+  }
+  
+  li a:hover, .dropdown:hover .dropbtn {
+      background-color: grey;
+  }
+  
+  li.dropdown {
+      display: inline-block;
+  }
+  
+  .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: white;
+      min-width: 160px;
+      
+      
+  }
+  
+  .dropdown-content a {
+      color: black;
+      padding: 12px 16px;
+      text-decoration: none;
+      display: block;
+      text-align: left;
+      
+  }
+  
+  
+  
+  .dropdown:hover .dropdown-content {
+      display: block;
+      opacity: 1;
+  }
+  td {
+      padding: 5px;
+      text-align: left;
+      width: 500px;
+  }
+  
+  tr{
+     padding: 0px;
+     text-align: top;
+     background-color:#ffffff
+  }
+  
+  img:hover {
+    opacity: 1;
+  }
+  
+  </style>
+  
+  
+  
+  
+  
+  <div class="w3-container w3-border city" id="Data Gathering">
+  <br>
+  <br>
+  
+ 
+  
+  <style>
+  
+  th, td {
+    border: 1px solid black;
+  }
+  .center {
+    margin-left: auto;
+    margin-right: auto;
+  }
+  </style>
+  <div style="margin-left: 10px; margin-right: 10px;">
+  <h1 style="color:white"><b>DATA GATHERING</b></h1>
+  <p style="color:white">Data gathering is the process of gathering and measuring information about variables of interest in a systematic way that allows one to answer stated research questions, test hypotheses, and evaluate results. All fields of study, such as the physical and social sciences, the humanities, business, etc., have to collect data as part of their research. Different fields use different methods, but the focus is always on making sure the data is accurate and honest.</p>
+  <h4 style="color:white" class="anchored">The significance of ensuring precise and appropriate data gathering:</h4>
+  <p style="color:white">Regardless of the subject of study or preferred method of defining data (quantitative, qualitative), correct data collecting is necessary for preserving the validity of research. Errors are less likely to occur when proper data gathering instruments (existing, updated, or newly designed) and clear instructions for their right usage are chosen.</p>
+  <h4 style="color:white" class="anchored">Consequences of incorrect data gathering include the following:</h4>
+  <p style="color:white">● incapacity to appropriately answer research questions</p>
+  <p style="color:white">● failure to reproduce and validate the study</p>
+  <p style="color:white">● erroneous findings that result in wasted expenditure</p>
+  <p style="color:white">● tricking other researchers into investigating futile pathways</p>
+  <p style="color:white">● compromising public policy decisions</p>
+  <h4 style="color:white" class="anchored">The two methods are:</h4>
+  <p style="color:white">● Primary data gathering</p>
+  <p style="color:white">This is original, first-hand data acquired by data researchers, as the name implies. This is the first phase in acquiring information, and it is completed before any more or related research is conducted. Primary data results are very accurate if the information is collected by the researcher. However, there is a drawback: first-hand research can be time-consuming and costly.</p>
+  <p style="color:white">● Secondary data gathering</p>
+  <p style="color:white">Secondary data is data that has been gathered by third parties and has already been statistically analyzed. This material is either information that the researcher entrusted to others or information that the researcher searched up. Simply put, it's secondhand knowledge. Secondary information, while easier and less expensive to access than primary information, poses problems about veracity and validity. The majority of secondary data is quantitative.</p>
+  
+  <h2 style="color:white" class="anchored">Types of Data:</h2>
+  <h3 style="color:white" class="anchored">TEXT DATA</h3>
+  <h4 style="color:white" class="anchored">Application Programming Interface (API)</h4>
+  <p style="color:white">One way in which programs can share information is through the use of an API, or application programming interface. You probably utilize an API every time you do anything on your phone, from sending a message to checking the score of a game. They both employ an application programming interface (API) to retrieve and send the data to your mobile device. An application programming interface (API) acts as an intermediary between a user and a service by receiving requests, translating them, and delivering responses. Developers essentially use APIs to gain access to resources on behalf of end users. Of course, an API only delivers the information that the application's developers have decided to make available. A valid API key is typically needed to authenticate a request made to an API. Instructions and prerequisites for using an API can be found in its accompanying documentation. Indeed, the utilization of several APIs is oftentimes entirely gratis. Following the existing API instructions, developers can typically construct a URL to get the data in a browser.</p>
+
+  <h4 style="color:white" class="anchored">TWITTER API</h4>
+  <p style="color:white">A well-documented API, the Twitter API grants developers advanced access to the social media platform. You can use it to learn from and engage with Tweets. Direct messages, users, and other Twitter resources can all be interacted with. Developers can access user searches, block lists, real-time tweets, and more using Twitter's application programming interface (API).</p>
+  <p style="color:white">Twitter has made a number of application programming interfaces (APIs) available to programmers. Researchers and businesses can use these APIs to mine Twitter for information. Smaller initiatives can also benefit from it, including data analysis, bot development, and even the creation of fully automated systems that can communicate with Twitter. The Twitter Application Programming Interface (API) will be used to retrieve recent public Tweets that are relevant to a given search query.</p>
+  <h3 style="color:white" class="anchored">RECORD DATA</h3>
+  <p style="color:white">The record data is gathered from the FBI's website, Crime Data Explorer. The FBI's Crime Data Explorer (CDE) wants to make criminal and noncriminal law enforcement data sharing more open, easier to access, and better known.&nbsp;</p>
+
+  <h4 style="color:white" class="anchored">About Record Data</h4>
+  <p style="color:white">There are several record data collected according to the requirements of analysis because crime is a broad topic with many subcategories. The reord data provides information on crime in the United States for various age groups, genders, and races. From 1960 to 2019, the state crime data provides information on crime types. The hate crime dataset provides information on offenders in the United States from 1990 to 2020.</p>
+  </div>
+
+
+  &gt;
+        <table class="center" style="width:100%">
+    <tbody>
+      <tr style="text-align:center;"><th>Snippet of Dataset</th>
+        <th>Description</th>
+      </tr>
+      <tr>
+        <td><img alt="Twitter Data" height="250px" src="./images/R_CRIME_API_TEXT_DATA_RAW.png" width="450px">
+        <center><a href="./images/R_CRIME_API_TEXT_DATA_RAW.png" target="new">View </a></center>
+        <a href="./images/R_CRIME_API_TEXT_DATA_RAW.png" target="new"> </a>
+  
+        <center><a href="https://github.com/anly501/anly-501-project-chaishekar/tree/main/data/raw-data/R_CRIME_TEXT_DATA.csv">Download csv file</a></center>
+        </td>
+        <td><h3 style="text-align: center; font-size: 20px; font-weight: bold;" class="anchored"> <center><b>R API FOR #CRIME</b></center></h3>
+          <center> The API gives users broad access to public Twitter data that they have decided to share with the rest of the world. #CRIME used to gather data from Twitter in order to analyze people's perspectives on crime.</center>
+          <center>The data is extracted by querying Twitter for the hashtag and querying for the most recent tweets, which are then turned into dataframes based on author, time, text, and language.</center>
+           <br>
+           
+        <center><a href="https://github.com/anly501/anly-501-project-chaishekar/tree/main/code/data-gathering/R_CRIME_TEXT_DATA_API.Rmd">R code </a></center>
+        </td>
+      </tr>
+      <tr>
+        <td><img alt="Twitter Data" height="250px" src="./images/R_FBI_API_TEXT_DATA_RAW.png" width="450px">
+        <center><a href="./images/R_FBI_API_TEXT_DATA_RAW.png" target="new">View </a></center>
+        <a href="./images/R_FBI_API_TEXT_DATA_RAW.png" target="new"> </a>
+  
+        <center><a href="https://github.com/anly501/anly-501-project-chaishekar/tree/main/data/raw-data/R_FBI_TEXT_DATA.csv">Download csv file</a></center>
+        </td>
+        <td><h3 style="text-align: center; font-size: 20px; font-weight: bold;" class="anchored"> <center><b>R API FOR #FBI</b></center></h3>
+        <center> The API gives users broad access to public Twitter data that they have decided to share with the rest of the world. #FBI used to gather data from Twitter in order to analyze people's perspectives on FBI.</center>
+        <center>The data is extracted by querying Twitter for the hashtag and querying for the most recent tweets, which are then turned into dataframes based on author, time, text, and language.</center>
+          
+        <br>
+           
+        <center><a href="https://github.com/anly501/anly-501-project-chaishekar/tree/main/code/data-gathering/R_FBI_TEXT_DATA_API.Rmd">R code </a></center>
+        </td>
+      </tr>
+      <tr>
+        <td><img alt="Twitter Data" height="250px" src="./images/R_CRIMEUSA_API_TEXT_DATA_RAW.png" width="450px">
+        <center><a href="./images/R_CRIMEUSA_API_TEXT_DATA_RAW.png" target="new">View </a></center>
+        <a href="./images/R_CRIMEUSA_API_TEXT_DATA_RAW.png" target="new"> </a>
+  
+        <center><a href="https://github.com/anly501/anly-501-project-chaishekar/tree/main/data/raw-data/R_CRIMEUSA_TEXT_DATA.csv">Download csv file</a></center>
+        </td>
+        <td><h3 style="text-align: center; font-size: 20px; font-weight: bold;" class="anchored"> <center><b>R API FOR #CRIMEUSA</b></center></h3>
+        <center> The API gives users broad access to public Twitter data that they have decided to share with the rest of the world. #CRIMEUSA used to gather data from Twitter in order to analyze people's perspectives on crime in USA.</center>
+        <center>The data is extracted by querying Twitter for the hashtag and querying for the most recent tweets, which are then turned into dataframes based on author, time, text, and language.</center>
+          <br>
+           
+        <center><a href="https://github.com/anly501/anly-501-project-chaishekar/tree/main/code/data-gathering/R_CRIMEUSA_API.r">R code </a></center>
+        </td>
+      </tr>
+      <tr>
+        <td><img alt="Python_API" height="250px" src="./images/CRIME_DATA_PY_TEXT_DATA_RAW.png" width="450px">
+        <center><a href="./images/CRIME_DATA_PY_TEXT_DATA_RAW.png" target="new">View</a></center>
+        <a href="./images/CRIME_DATA_PY_TEXT_DATA_RAW.png" target="new"> </a>
+  
+        <center><a href="https://github.com/anly501/anly-501-project-chaishekar/tree/main/data/raw-data/CRIME_LOCATION_PY_TEXT_DATA.csv"> download csv file </a></center>
+        </td> 
+        <td><h3 style="text-align: center; font-size: 20px; font-weight: bold;" class="anchored"> <center><b>Python API</b></center></h3>
+        <center> Through the utilization of the Twitter API, tweets that have the hashtag "crime" in conjunction with a location are retrieved.</center>
+        <center>The data is extracted by querying Twitter for the hashtag and querying for the most recent tweets, which are then turned into dataframes based on author, time, text, and language.</center>
+        <br>
+        <center><a href="https://github.com/anly501/anly-501-project-chaishekar/tree/main/code/data-gathering/CRIME_DATA_PY.py">Python code </a></center>
+        </td>
+      </tr>
+      <tr>
+        <td><img alt="RECORD DATA" height="250px" src="./images/STATEWISE_CRIME_RAW.png" width="450px">
+        <center><a href="./images/STATEWISE_CRIME_RAW.png" target="new">View </a></center>
+        <a href="./images/STATEWISE_CRIME_RAW.png" target="new"> </a>
+  
+        </td>
+        <td><h3 style="text-align: center; font-size: 20px; font-weight: bold;" class="anchored"><center><b>Raw Data</b></center></h3> 
+        <p>Age Crime Data: <a href="https://github.com/anly501/anly-501-project-chaishekar/tree/main/data/raw-data/age_crime_data.csv">Download csv file </a></p>
+        <p>Statewise Crime 1960-2019: <a href="https://github.com/anly501/anly-501-project-chaishekar/tree/main/data/raw-data/state_crime.csv">Download csv file </a></p>
+        <p>Hate Crime 1991-2020: <a href="https://github.com/anly501/anly-501-project-chaishekar/tree/main/data/raw-data/hate_crime.csv">Download csv file </a></p>
+        <p>Crime Against Person by Location: <a href="https://github.com/anly501/anly-501-project-chaishekar/tree/main/data/raw-data/Crimes_Against_Persons_Offenses_Offense_Category_by_Location_2020.csv">Download csv file </a></p>
+        <p>Crime Against Person by Statewise: <a href="https://github.com/anly501/anly-501-project-chaishekar/tree/main/data/raw-data/Crimes_Against_Persons_Offenses_Offense_Category_by_State_2020.csv">Download csv file </a></p>
+        <p>Crime Against Society by Location: <a href="https://github.com/anly501/anly-501-project-chaishekar/tree/main/data/raw-data/Crimes_Against_Society_Offenses_Offense_Category_by_Location_2020.csv">Download csv file </a></p>
+        <p>Crime Against Society by Statewise: <a href="https://github.com/anly501/anly-501-project-chaishekar/tree/main/data/raw-data/Crimes_Against_Society_Offenses_Offense_Category_by_State_2020.csv">Download csv file </a></p>
+        
+        <p>The source of this raw data is collected from FBI crime data explorer.
+        </p></td>
+      </tr>
+      
+      
+    </tbody>
+  </table>
+  
+  </div>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+
+
+
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

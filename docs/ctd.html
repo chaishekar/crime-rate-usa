@@ -1,0 +1,1114 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.335">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>CLUSTERING FOR TEXT DATA</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+
+</head>
+
+<body class="nav-fixed fullcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./index.html">
+ <span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./introduction.html">
+ <span class="menu-text">Introduction</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://github.com/anly501/anly-501-project-chaishekar/tree/main/code">
+ <span class="menu-text">Code</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://github.com/anly501/anly-501-project-chaishekar/tree/main/data">
+ <span class="menu-text">Data</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./data_gathering.html">
+ <span class="menu-text">Data Gathering</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./data_cleaning.html">
+ <span class="menu-text">Data Cleaning</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./exploring_data.html">
+ <span class="menu-text">Exploring Data</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-naive-bayes" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Naive Bayes</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-naive-bayes">    
+        <li>
+    <a class="dropdown-item" href="./nbrd.html">
+ <span class="dropdown-text">Record Data</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./nbtd.html">
+ <span class="dropdown-text">Text Data</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="./dt.html">
+ <span class="menu-text">Decision Trees</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./svm.html">
+ <span class="menu-text">SVM</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-clustering" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Clustering</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-clustering">    
+        <li>
+    <a class="dropdown-item" href="./crd.html">
+ <span class="dropdown-text">Record Data</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./ctd.html">
+ <span class="dropdown-text">Text Data</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="./arm.html">
+ <span class="menu-text">ARM and Clustering</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./conclusion.html">
+ <span class="menu-text">Conclusion</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">CLUSTERING FOR TEXT DATA</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<p><strong>INTRODUCTION</strong></p>
+<p>A data collection effort for the hashtags “CRIME” is now being carried out on Twitter. The goal of this is to have a deeper comprehension of the many viewpoints that people hold about criminal activity.</p>
+<p><strong>DATA CLEANING AND VISUALIZATION</strong></p>
+<p>Cleaning up the text data from Twitter is done with Python. In order to carry out an investigation into #crime, all of the columns in the dataset were taken out, leaving only the text column. This allowed for the conduct of an investigation. During this stage of the cleaning process, both the Tokenization module from the NLTK library and the Countvectorizer module from the scikit-learn library are utilized.</p>
+<p>The following bar graph and word cloud display the results of data visualization performed on the #CRIME dataset. These display the most frequently used tweet words along with the hashtag. The wordcloud reveals that the most frequently used terms associated with the hashtag are “inflation”, “breakthrough”, “mass”, and “dating” which provides some insight into the context in which people are using the hashtag.</p>
+<p>IMPORT LIBRARIES</p>
+<div class="cell" data-execution_count="3">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co">#Loading the required libaries</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.feature_extraction.text <span class="im">import</span> CountVectorizer</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.feature_extraction.text <span class="im">import</span> TfidfVectorizer</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> re</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> warnings</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sys <span class="im">import</span> exit</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>warnings.filterwarnings(<span class="st">'ignore'</span>)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> wordcloud <span class="im">import</span> WordCloud, STOPWORDS</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> nltk.corpus <span class="im">import</span> stopwords</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.cluster <span class="im">import</span> KMeans</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> mpl_toolkits.mplot3d <span class="im">import</span> Axes3D</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.cluster <span class="im">import</span> KMeans</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn <span class="im">import</span> datasets</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn <span class="im">import</span> preprocessing</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pylab <span class="im">as</span> pl</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn <span class="im">import</span> decomposition</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sklearn</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> StandardScaler</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.cluster <span class="im">import</span> KMeans</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn <span class="im">import</span> metrics</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.cluster <span class="im">import</span> AgglomerativeClustering</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> scipy.cluster.hierarchy <span class="im">as</span> hc</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.decomposition <span class="im">import</span> PCA</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.cluster <span class="im">import</span> DBSCAN</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>IMPORT DATA</p>
+<div class="cell" data-execution_count="4">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="st">"../../data/modified-data/cleaned_crime_text_data.csv"</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>df.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="4">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>text</th>
+      <th>clean text</th>
+      <th>Tweet_tokenized</th>
+      <th>Tweet_without_stop</th>
+      <th>Tweet_stemmed</th>
+      <th>Tweet_lemmatized</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>@WhatRickySaid @CalaVento @memestheband @HongF...</td>
+      <td>WhatRickySaid CalaVento memestheband HongFaux ...</td>
+      <td>['whatrickysaid', 'calavento', 'memestheband',...</td>
+      <td>['whatrickysaid', 'calavento', 'memestheband',...</td>
+      <td>['whatrickysaid', 'calavento', 'memestheband',...</td>
+      <td>['whatrickysaid', 'calavento', 'memestheband',...</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Breakthrough in mass murder case\nhttps://t.co...</td>
+      <td>Breakthrough in mass murder case\nhttpstcoBhdF...</td>
+      <td>['breakthrough', 'in', 'mass', 'murder', 'case...</td>
+      <td>['breakthrough', 'mass', 'murder', 'case', 'ht...</td>
+      <td>['breakthrough', 'mass', 'murder', 'case', 'ht...</td>
+      <td>['breakthrough', 'mass', 'murder', 'case', 'ht...</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Driven by Kerena Swan @KerenaSwan @rararesourc...</td>
+      <td>Driven by Kerena Swan KerenaSwan rararesources...</td>
+      <td>['driven', 'by', 'kerena', 'swan', 'kerenaswan...</td>
+      <td>['driven', 'kerena', 'swan', 'kerenaswan', 'ra...</td>
+      <td>['driven', 'kerena', 'swan', 'kerenaswan', 'ra...</td>
+      <td>['driven', 'kerena', 'swan', 'kerenaswan', 'ra...</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Suspicious phone call? Something doesn't feel ...</td>
+      <td>Suspicious phone call Something doesnt feel ri...</td>
+      <td>['suspicious', 'phone', 'call', 'something', '...</td>
+      <td>['suspicious', 'phone', 'call', 'something', '...</td>
+      <td>['suspici', 'phone', 'call', 'someth', 'doesnt...</td>
+      <td>['suspicious', 'phone', 'call', 'something', '...</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>@RDTVF Donate @RDTVF #indie #internet #radio s...</td>
+      <td>RDTVF Donate RDTVF indie internet radio suppor...</td>
+      <td>['rdtvf', 'donate', 'rdtvf', 'indie', 'interne...</td>
+      <td>['rdtvf', 'donate', 'rdtvf', 'indie', 'interne...</td>
+      <td>['rdtvf', 'donat', 'rdtvf', 'indi', 'internet'...</td>
+      <td>['rdtvf', 'donate', 'rdtvf', 'indie', 'interne...</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+<p>VISUALIZATION</p>
+<div class="cell" data-execution_count="5">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>twitter_data <span class="op">=</span> df[[<span class="st">'Tweet_lemmatized'</span>]]</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co">#remove retweets</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>twitter_data <span class="op">=</span> twitter_data[<span class="op">~</span>twitter_data[<span class="st">'Tweet_lemmatized'</span>].<span class="bu">str</span>.contains(<span class="st">'rt'</span>)]</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">#BARGRAPH OF TOP USED WORDS IN TWEETS</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_top_n_words(corpus, n<span class="op">=</span><span class="va">None</span>):</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    vec<span class="op">=</span>CountVectorizer().fit(corpus)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    bag_of_words <span class="op">=</span> vec.transform(corpus)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    sum_words <span class="op">=</span> bag_of_words.<span class="bu">sum</span>(axis<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    words_freq <span class="op">=</span> [(word, sum_words[<span class="dv">0</span>, idx]) <span class="cf">for</span> word, idx <span class="kw">in</span> vec.vocabulary_.items()]</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    words_freq <span class="op">=</span><span class="bu">sorted</span>(words_freq, key <span class="op">=</span> <span class="kw">lambda</span> x: x[<span class="dv">1</span>], reverse<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> words_freq[:n]</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>common_words <span class="op">=</span> get_top_n_words(twitter_data[<span class="st">'Tweet_lemmatized'</span>], <span class="dv">20</span>)</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>twitter_data_count <span class="op">=</span> pd.DataFrame(common_words, columns <span class="op">=</span> [<span class="st">'Review'</span>, <span class="st">'count'</span>])</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>twitter_data_count.groupby(<span class="st">'Review'</span>).<span class="bu">sum</span>()[<span class="st">'count'</span>].sort_values(ascending<span class="op">=</span><span class="va">False</span>).plot(</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    kind<span class="op">=</span><span class="st">'bar'</span>,</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>),</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>    xlabel <span class="op">=</span> <span class="st">"Top Words"</span>,</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>    ylabel <span class="op">=</span> <span class="st">"Count"</span>,</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>    title <span class="op">=</span> <span class="st">"Bar Chart of Top Words Frequency"</span>, color<span class="op">=</span><span class="st">"#528B8B"</span></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="5">
+<pre><code>&lt;AxesSubplot:title={'center':'Bar Chart of Top Words Frequency'}, xlabel='Top Words', ylabel='Count'&gt;</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="ctd_files/figure-html/cell-4-output-2.png" class="img-fluid"></p>
+</div>
+</div>
+<p>WORDCLOUD</p>
+<div class="cell" data-execution_count="6">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">#WORDCLOUD OF THE #CRIME DATASETS</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>stopwords <span class="op">=</span> <span class="bu">set</span>(STOPWORDS)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>letters_only <span class="op">=</span> re.sub(<span class="st">"[^a-zA-Z]+"</span>, <span class="st">" "</span>, <span class="bu">str</span>(twitter_data[<span class="st">'Tweet_lemmatized'</span>]))</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>wordcloud <span class="op">=</span> WordCloud(width <span class="op">=</span> <span class="dv">800</span>, height <span class="op">=</span> <span class="dv">800</span>,</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>                background_color <span class="op">=</span><span class="st">'white'</span>,</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>                stopwords <span class="op">=</span> stopwords,</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>                min_font_size <span class="op">=</span> <span class="dv">10</span>,  colormap<span class="op">=</span><span class="st">"bone"</span>).generate(letters_only)</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize <span class="op">=</span> (<span class="dv">8</span>, <span class="dv">8</span>), facecolor <span class="op">=</span> <span class="va">None</span>)</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>plt.imshow(wordcloud)</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>plt.axis(<span class="st">"off"</span>)</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>plt.tight_layout(pad <span class="op">=</span> <span class="dv">0</span>)</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<p><img src="ctd_files/figure-html/cell-5-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<p>COUNT OF LEMMATIZED TWEETS</p>
+<div class="cell" data-execution_count="7">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">#count tweet['lemmatized'] rows</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>twitter_data[<span class="st">'Tweet_lemmatized'</span>].count()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="7">
+<pre><code>3297</code></pre>
+</div>
+</div>
+<p><strong>COUNT VECTORIZER</strong></p>
+<p>The Python scikit-learn module CountVectorizer is used to turn a supplied text into a vector based on the frequency&nbsp;of each word that appears in the full text. This is useful when we have numerous such texts and want to transform each word to a vector for using in&nbsp;text analysis. CountVectorizer generates a matrix where each distinct word corresponds to a column so each text sample in the document corresponds to a row. Each cell’s value is just the number of words in its respective text sample. After applying the count vectorizer, the data are restored and used for further clustering analysis.</p>
+<div class="cell" data-execution_count="8">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">#COUNTVECTORIZER</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>CV<span class="op">=</span>CountVectorizer(<span class="bu">input</span><span class="op">=</span><span class="st">'content'</span>,</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>                      stop_words<span class="op">=</span><span class="st">'english'</span>,</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>                      <span class="co">#decode_error='ignore'</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>                      )</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>The_DTM_CV<span class="op">=</span>CV.fit_transform(twitter_data[<span class="st">'Tweet_lemmatized'</span>])</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>TheColumnNames_CV<span class="op">=</span>CV.get_feature_names()</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="co">#regex model</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>pattern <span class="op">=</span> <span class="vs">r'[0-9]'</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Match all digits in the string and replace them with an empty string</span></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>New_TheColumnNames <span class="op">=</span> re.sub(pattern, <span class="st">''</span>, <span class="bu">str</span>(TheColumnNames_CV))</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a><span class="co">#The second step is to use pandas to create data frames</span></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>The_DF <span class="op">=</span> pd.DataFrame(The_DTM_CV.toarray(),columns<span class="op">=</span>TheColumnNames_CV)</span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>The_DF <span class="op">=</span> The_DF.<span class="bu">filter</span>(regex<span class="op">=</span><span class="st">'^\D'</span>)</span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>The_DF.to_csv(<span class="st">"DTM_CV.csv"</span>)</span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a><span class="co">#DATA AFTER COUNTVECTORIZER</span></span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>filename<span class="op">=</span> pd.read_csv(<span class="st">"DTM_CV.csv"</span>)</span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a><span class="co">#normalize the data</span></span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>file_norm <span class="op">=</span>(filename <span class="op">-</span> filename.mean()) <span class="op">/</span> filename.std()</span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>filename.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="8">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>Unnamed: 0</th>
+      <th>aadhi</th>
+      <th>aaditya</th>
+      <th>aaftab</th>
+      <th>aaftabpoonawalla</th>
+      <th>aap</th>
+      <th>aapl</th>
+      <th>aaronovitch</th>
+      <th>aarop</th>
+      <th>aatma</th>
+      <th>...</th>
+      <th>𝗛𝗼𝘂𝘀𝗲𝘄𝗶𝗳𝗲</th>
+      <th>𝗞𝗶𝗹𝗹𝗶𝗻𝗴</th>
+      <th>𝗟𝗢𝗡𝗚</th>
+      <th>𝗢𝗡</th>
+      <th>𝗣𝗲𝘀𝘁𝗹𝗲</th>
+      <th>𝗣𝗼𝗹𝗶𝗰𝗲</th>
+      <th>𝗦𝗛𝗔𝗗𝗢𝗪</th>
+      <th>𝗦𝗧𝗔𝗚𝗘</th>
+      <th>𝗧𝗛𝗘</th>
+      <th>𝗪𝗶𝘁𝗵</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>3</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>4</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 12018 columns</p>
+</div>
+</div>
+</div>
+<p><strong>CLUSTERING</strong></p>
+<p>Clustering is the process of dividing a population or set of data points into a number of groups in such a way that the data points in each group are more similar to each other than they are to the data points in any of the other groups. This ensures that each group contains data points that are more comparable to each other than they are to the data points in any of the other groups. At its most fundamental level, it is a collection of items that are arranged in accordance with the degrees to which they are similar to or distinct from the other items in the collection. It accomplishes this by searching the unlabeled dataset for recurring patterns, such as shape, size, color, and behavior, among other things, and then dividing the data based on whether or not those recurring patterns are present or absent.&nbsp;Because it is an unsupervised learning approach, the algorithm does not receive any supervision, and it works with unlabeled datasets. Also, the datasets are not labeled.</p>
+<p><strong>CLUSTERING ALGORITHMS:</strong></p>
+<p>Clustering algorithms can be used to organize data points into groups according to the similarities they share with other data points. There is not a set of criteria that define successful clustering. Clustering is a method for categorizing data that is not pre-labeled. It is mostly dependent on the individual user as well as the circumstance.</p>
+<p><em>Common cluster models:</em></p>
+<ul>
+<li><p>Connectivity models, which construct models based on distance connectedness.</p></li>
+<li><p>Centroid models, which represent each cluster with a single mean vector</p></li>
+<li><p>Distribution models, which model clusters using statistical distributions</p></li>
+<li><p>Density models, which defines clustering as a densely connected region in data space.</p></li>
+</ul>
+<p><strong>KMEANS</strong></p>
+<p>K-means clustering is one of the easiest and most popular algorithms for learning without being watched. A cluster is a group of data points that are put together because they have some things in common. You will set a target number, k, which is the number of centers you need in the dataset. A centroid is the place, real or made up, that represents the cluster’s center. Each data point is put into one of the clusters by lowering the sum of squares for each cluster. In other words, the K-means algorithm finds k number of centers, then puts each data point in the cluster that is closest to it while keeping the centers as small as possible. The word “means” in K-means refers to taking the average of the data, or finding the center.</p>
+<p>Advantages of k-means:</p>
+<ul>
+<li><p>Relatively straightforward to implement.</p></li>
+<li><p>Scales to big data collections.</p></li>
+<li><p>Guarantees convergence.</p></li>
+<li><p>Possibility to warm-up the positions of centroids.</p></li>
+<li><p>Adapts readily to new examples.</p></li>
+<li><p>Generalizes to clusters of various sizes and forms, including elliptical clusters.</p></li>
+</ul>
+<p>Disadvantages of k-means:</p>
+<ul>
+<li><p>Choosing k manually.</p></li>
+<li><p>Data of varied sizes and densities are clustered.</p></li>
+<li><p>Clustering outliers.</p></li>
+<li><p>Scaling with dimension count.</p></li>
+</ul>
+<p><strong>CLUSTERING WITH RANDOM HYPER - PARAMETER: KMEANS ALGORITHM</strong></p>
+<p>A random K value is taken. Here, k = 3 is employed as the initial label prediction step. Once the labels have been predicted, kmeans model clustering with the same k value, k = 3, is performed to examine the clusters.</p>
+<p>PREDICTION OF LABELS</p>
+<div class="cell" data-execution_count="9">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># KMEANS</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Use k-means clustering on the data.</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>k <span class="op">=</span> <span class="dv">3</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co">## Sklearn required you to instantiate first</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>kmeans <span class="op">=</span> KMeans(n_clusters<span class="op">=</span>k)</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>kmeans.fit(filename)   <span class="co">## run kmeans</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>labels <span class="op">=</span> kmeans.labels_</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(labels)</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>centroids <span class="op">=</span> kmeans.cluster_centers_</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(centroids)</span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>prediction <span class="op">=</span> kmeans.predict(filename)</span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(prediction)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1 1 1 ... 2 2 2]
+[[ 1.64700000e+03 -2.71050543e-19 -2.71050543e-19 ... -2.71050543e-19
+  -5.42101086e-19 -2.71050543e-19]
+ [ 5.48500000e+02 -1.13841228e-18 -1.13841228e-18 ... -1.13841228e-18
+  -2.27682456e-18  9.10746812e-04]
+ [ 2.74650000e+03  9.09090909e-04  9.09090909e-04 ...  9.09090909e-04
+   1.81818182e-03  1.02999206e-18]]
+[1 1 1 ... 2 2 2]</code></pre>
+</div>
+</div>
+<p>KMEANS CLUSTERING FOR K = 3</p>
+<div class="cell" data-execution_count="10">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Kmeans for K = 3</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>km <span class="op">=</span> KMeans(n_clusters<span class="op">=</span><span class="dv">3</span>)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>km.fit(The_DTM_CV)</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>pca <span class="op">=</span> PCA(n_components<span class="op">=</span><span class="dv">2</span>, random_state<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>reduced_features <span class="op">=</span> pca.fit_transform(The_DTM_CV.toarray())</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="co"># reduce the cluster centers to 2D\</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>reduced_cluster_centers <span class="op">=</span> pca.transform(km.cluster_centers_)</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> matplotlib.pyplot <span class="im">import</span> figure</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">12</span>), dpi<span class="op">=</span><span class="dv">80</span>)</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>plt.scatter(reduced_features[:,<span class="dv">0</span>], reduced_features[:,<span class="dv">1</span>], c<span class="op">=</span>km.predict(The_DTM_CV))</span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>plt.scatter(reduced_cluster_centers[:, <span class="dv">0</span>], reduced_cluster_centers[:,<span class="dv">1</span>], marker<span class="op">=</span><span class="st">'x'</span>, s<span class="op">=</span><span class="dv">150</span>, c<span class="op">=</span><span class="st">'r'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="10">
+<pre><code>&lt;matplotlib.collections.PathCollection at 0x7f8b34878430&gt;</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="ctd_files/figure-html/cell-9-output-2.png" class="img-fluid"></p>
+</div>
+</div>
+<p><strong>HYPER-PARAMTER TUNING:</strong></p>
+<p>Tuning hyper - parameters for unsupervised learning issues is typically difficult owing to the lack of validation ground truth. However, the effectiveness of the majority of clustering algorithms relies greatly on the selection of appropriate hyper - parameters. For each method that performs Clustering on a dataset, numerous hyper - parameters must be specified in advance. However, these hyper-parameters must be modified with our dataset in mind. Using random hyper - parameters that do not match our dataset could result on&nbsp;incorrect classification of datapoints into clusters. So, in &nbsp;order to optimize their performance hyper-parameters are being used.</p>
+<p>To do hyper-parameter tuning, we have to make functions &nbsp;use a metric to try to find the best Hyper-parameter(s). This metric is different for each algorithm and each method within an algorithm. There are many ways to figure out optimal value such as the Elbow method, the Silhouette method, the Grubbs method, and so on.</p>
+<p><strong>HYPER-PARAMTER TUNING FOR KMEANS:</strong></p>
+<p>For K-Means Algorithm, hyper-parameter is n_cluster. There are two metods which are being used to find the optimal value:</p>
+<ol type="1">
+<li>ELBOW METHOD</li>
+</ol>
+<p>By fitting the model with a range of values for, the “elbow” method can help choose the best number of clusters. If the line chart looks like an arm, the “elbow,” or point where the curve bends, is a good sign that the model fits best at that point. “Elbow” will be marked in the visualizer with a dashed line.</p>
+<p>Here, the k&nbsp;value is considered to&nbsp;range from 2 to 7. When the model is fit, we can see a line on the graph that marks the “elbow,” which in this case is the best number.</p>
+<div class="cell" data-execution_count="11">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Look at best values for k </span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>SS_dist <span class="op">=</span> []</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>values_for_k<span class="op">=</span><span class="bu">range</span>(<span class="dv">2</span>,<span class="dv">7</span>)</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> k_val <span class="kw">in</span> values_for_k:</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>    k_means <span class="op">=</span> KMeans(n_clusters<span class="op">=</span>k_val)</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>    model <span class="op">=</span> k_means.fit(filename)</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>    SS_dist.append(k_means.inertia_)</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>plt.plot(values_for_k, SS_dist, <span class="st">'bx-'</span>, color<span class="op">=</span><span class="st">'lightblue'</span>)</span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'value'</span>)</span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Sum of squared distances'</span>)</span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Elbow method for optimal k Choice'</span>)</span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<p><img src="ctd_files/figure-html/cell-10-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<ol start="2" type="1">
+<li>SILHOUETTE METHOD</li>
+</ol>
+<p>The silhouette method can also be used to find the best number of clusters or other hyper-parameters and to check that the data in each cluster is consistent. This method figures out silhouette coefficients for each sample point and takes the average of all of them to get the silhouette score. It picks the set of hyper-parameters with the highest silhouette score. The silhouette value is a way to compare how similar an object is to other objects in its own cluster (separation).</p>
+<p>Here, the k&nbsp;value is considered to&nbsp;range from 2 to 7. When the model is fit, we can see a line on the graph that marks the “silhouette,” which in this case is the best number.</p>
+<div class="cell" data-execution_count="12">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Look at Silhouette</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>Sih<span class="op">=</span>[]</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>Cal<span class="op">=</span>[]</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>k_range<span class="op">=</span><span class="bu">range</span>(<span class="dv">2</span>,<span class="dv">20</span>)</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> k <span class="kw">in</span> k_range:</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>    k_means_n <span class="op">=</span> KMeans(n_clusters<span class="op">=</span>k)</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>    model <span class="op">=</span> k_means_n.fit(filename)</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>    Pred <span class="op">=</span> k_means_n.predict(filename)</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>    labels_n <span class="op">=</span> k_means_n.labels_</span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>    R1<span class="op">=</span>metrics.silhouette_score(filename, labels_n, metric <span class="op">=</span> <span class="st">'euclidean'</span>)</span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>    R2<span class="op">=</span>metrics.calinski_harabasz_score(filename, labels_n)</span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>    Sih.append(R1)</span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>    Cal.append(R2)</span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>fig1, (ax1, ax2) <span class="op">=</span> plt.subplots(nrows<span class="op">=</span><span class="dv">2</span>, ncols<span class="op">=</span><span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">10</span>,<span class="dv">10</span>))</span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>ax1.plot(k_range,Sih, color<span class="op">=</span><span class="st">"#8B8386"</span>)</span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a>ax1.set_title(<span class="st">"Silhouette"</span>)</span>
+<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a>ax1.set_xlabel(<span class="st">""</span>)</span>
+<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a>ax2.plot(k_range,Cal, color<span class="op">=</span><span class="st">'#F08080'</span>)</span>
+<span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a>ax2.set_title(<span class="st">"Calinski_Harabasz_Score"</span>)</span>
+<span id="cb14-24"><a href="#cb14-24" aria-hidden="true" tabindex="-1"></a>ax2.set_xlabel(<span class="st">"k values"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="12">
+<pre><code>Text(0.5, 0, 'k values')</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="ctd_files/figure-html/cell-11-output-2.png" class="img-fluid"></p>
+</div>
+</div>
+<p>From the above methods, the optimal value is taken as 2 i.e.&nbsp;k = 2. Considering k =2, the data is fit&nbsp;into the k-means algorithm and proceeding with the scatter plot.&nbsp;Principal component analysis (PCA) is a way to reduce the number of dimensions in these kinds of datasets, making them easier to understand while losing as little information as possible. It does this by making new variables that are not related to each other and that gradually optimize variance.</p>
+<div class="cell" data-execution_count="13">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Kmeans for K = 2</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>km <span class="op">=</span> KMeans(n_clusters<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>km.fit(The_DTM_CV)</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>pca <span class="op">=</span> PCA(n_components<span class="op">=</span><span class="dv">2</span>, random_state<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>reduced_features <span class="op">=</span> pca.fit_transform(The_DTM_CV.toarray())</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="co"># reduce the cluster centers to 2D\</span></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>reduced_cluster_centers <span class="op">=</span> pca.transform(km.cluster_centers_)</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> matplotlib.pyplot <span class="im">import</span> figure</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">12</span>), dpi<span class="op">=</span><span class="dv">80</span>)</span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>plt.scatter(reduced_features[:,<span class="dv">0</span>], reduced_features[:,<span class="dv">1</span>], c<span class="op">=</span>km.predict(The_DTM_CV), cmap<span class="op">=</span><span class="st">'rainbow'</span>)</span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>plt.scatter(reduced_cluster_centers[:, <span class="dv">0</span>], reduced_cluster_centers[:,<span class="dv">1</span>], marker<span class="op">=</span><span class="st">'x'</span>, s<span class="op">=</span><span class="dv">150</span>, c<span class="op">=</span><span class="st">'r'</span>, cmap<span class="op">=</span><span class="st">'rainbow'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="13">
+<pre><code>&lt;matplotlib.collections.PathCollection at 0x7f8b12b1da00&gt;</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="ctd_files/figure-html/cell-12-output-2.png" class="img-fluid"></p>
+</div>
+</div>
+<p><strong>DBSCAN: Density-Based Spatial Clustering of Applications with Noise</strong></p>
+<p>DBSCAN is an algorithm for density-based clustering that takes as its premise the idea that clusters are clumps of data that are physically separated by less dense areas. Specifically, it creates a cluster out of ‘densely clustered’ data points. By inspecting the regional density of the data points, it can locate groups in massive spatial datasets. DBSCAN clustering’s intriguing characteristic is its resistance to outliers. Unlike K-Means, where we have to provide the number of centroids, it does not require us to know the number of clusters in advance.</p>
+<p>The DBSCAN algorithm is described in detail below:</p>
+<ul>
+<li><p>DBSCAN generates its initial data point at random (non-visited points).</p></li>
+<li><p>This point’s neighborhood is extracted using an epsilon distance.</p></li>
+<li><p>If there are enough data points in this region, the clustering mechanism initiates, and the current data point becomes the first point in the newest cluster; otherwise, it is classified as noise and is subsequently visited.</p></li>
+<li><p>Every other point within epsilon distance of the first point in the new cluster likewise joins it as a member of the same cluster. The steps taken to ensure that all previously added data points are also part of the same cluster are repeated for all newly added data points.</p></li>
+<li><p>The preceding two procedures are continued until all cluster nodes are identified. All of the points in the cluster’s immediate neighborhood have been explored and categorized. When we’ve finished with the current cluster, we’ll move on to the next one by retrieving and processing a previously unvisited point. This process is carried out until all of the data points have been checked off as visited.</p></li>
+</ul>
+<p>Advantages of DSCAN:</p>
+<ul>
+<li><p>Doesn’t need the number of clusters to be set up front.</p></li>
+<li><p>Able to tell when data is just noise while clustering.</p></li>
+<li><p>The DBSCAN algorithm can find clusters that are any size and any shape.</p></li>
+</ul>
+<p>Disadvantages of DBSCAN:</p>
+<ul>
+<li><p>When clusters have different densities, the DBSCAN algorithm doesn’t work.</p></li>
+<li><p>Fails if the dataset is a neck type.</p></li>
+</ul>
+<p>In DBSCAN, the hyperparameters are Min points and epsilon.</p>
+<ul>
+<li>Min points: Min points ≥ dimensionality +1</li>
+</ul>
+<p>If the set of data is more noisy, we use Min. Points are bigger because it’s easy to get rid of noisy ones.</p>
+<ul>
+<li>Radius (Epsilon): Elbow method</li>
+</ul>
+<p>We figure out the distance between each data point and then sort distances from farthest to closest, and then draw a graph between distance and point index. From the graph,we choose the best distance (epsilon) where the graph shows a sharp rise.</p>
+<div class="cell" data-execution_count="14">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># we use nearestneighbors for calculating distance between points</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.neighbors <span class="im">import</span> NearestNeighbors</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="co"># calculating distances</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>neigh<span class="op">=</span>NearestNeighbors(n_neighbors<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>distance<span class="op">=</span>neigh.fit(filename)</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="co"># indices and distance values</span></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>distances,indices<span class="op">=</span>distance.kneighbors(filename)</span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Now sorting the distance increasing order</span></span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>sorting_distances<span class="op">=</span>np.sort(distances,axis<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a><span class="co"># sorted distances</span></span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>sorted_distances<span class="op">=</span>sorting_distances[:,<span class="dv">1</span>]</span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a><span class="co"># plot between distance vs epsilon</span></span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>plt.plot(sorted_distances, color<span class="op">=</span><span class="st">'lightblue'</span>)</span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Distance"</span>)</span>
+<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Epsilon"</span>)</span>
+<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<p><img src="ctd_files/figure-html/cell-13-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<p>Epsilon optimization If we look at the graph, we can see that at epsilon, there are 6 sharp rises, so we choose epsilon(radius) to be 6.</p>
+<p>Utilizing optimized hyperparameters when configuring DBSCAN. After determining the total number of clusters, we depict the corresponding point counts for each cluster in the section below. In the end, for eps=6 and min_samples = 2 the labels are predicted and DSCAN clusters are displayed.</p>
+<p>NUMBER OF POINTS ON EACH CLUSTER</p>
+<div class="cell" data-execution_count="15">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>MyDBSCAN <span class="op">=</span> DBSCAN(eps<span class="op">=</span><span class="dv">6</span>, min_samples<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>MyDBSCAN.fit_predict(filename)</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="co">#count the number of points in each cluster</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> collections <span class="im">import</span> Counter</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>Counter(MyDBSCAN.labels_)</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="co">#-1 means noise</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="15">
+<pre><code>Counter({0: 3295, -1: 2})</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="16">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co">#plot the counter</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>plt.bar(Counter(MyDBSCAN.labels_).keys(), Counter(MyDBSCAN.labels_).values())</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="co">#labels for the graph</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Cluster'</span>)</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Number of points in cluster'</span>)</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Distribution of points over clusters'</span>)</span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a><span class="co">#-1 means noise</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<p><img src="ctd_files/figure-html/cell-15-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<div class="cell" data-execution_count="17">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> collections <span class="im">import</span> Counter</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>labels_DB <span class="op">=</span> MyDBSCAN.labels_</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>Counter(labels_DB)</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="co">#plot clusters using PCA</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.decomposition <span class="im">import</span> PCA</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>pca <span class="op">=</span> PCA(n_components<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>pca.fit(filename)</span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>X_pca <span class="op">=</span> pca.transform(filename)</span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>plt.scatter(X_pca[:, <span class="dv">0</span>], X_pca[:, <span class="dv">1</span>], c<span class="op">=</span>labels_DB, s<span class="op">=</span><span class="dv">50</span>)</span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'clusters'</span>)</span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'DBSCAN Clusters'</span>)</span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<p><img src="ctd_files/figure-html/cell-16-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<div class="cell" data-execution_count="18">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Silhouette Coefficient: </span><span class="sc">%0.3f</span><span class="st">"</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>      <span class="op">%</span> metrics.silhouette_score(filename, labels_DB))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Silhouette Coefficient: -0.210</code></pre>
+</div>
+</div>
+<p><strong>HIERARCHIAL CLUSTERING</strong></p>
+<p>In order to construct layered clusters, hierarchical clustering algorithms repeatedly combine and divide existing clusters. As a tree, this structure depicts the relative hierarchy of the groups (or dendrogram). The single cluster that contains all of the others serves as the tree’s trunk, while the many other clusters that each contain exactly one sample serve as the tree’s leaves.</p>
+<p>Agglomerative hierarchical clustering (AHC):</p>
+<p>With the AgglomerativeClustering object, you may do hierarchical clustering from the bottom up, meaning that each observation is placed in its own cluster before being combined with others. While AgglomerativeClustering can scale to a large number of samples when used in conjunction with a connectivity matrix, it incurs a high computational cost when no connection constraints are placed between samples since it considers all possible mergers at each step.</p>
+<p>Advantages of AHC:</p>
+<ul>
+<li><p>AHC is easy to set up, and it can also arrange objects in a way that is helpful for the display.</p></li>
+<li><p>We don’t have to know ahead of time how many clusters there will be. By cutting the dendrogram at a certain level, it’s easy to figure out how many clusters there are.</p></li>
+<li><p>In the AHC method, smaller groups of data will be put together, which may show similarities.</p></li>
+</ul>
+<p>Disadvantages of AHC:</p>
+<ul>
+<li><p>If you group the objects wrong in any of the first steps, you can’t go back and fix it.</p></li>
+<li><p>Hierarchical clustering algorithms don’t give a unique way to divide the dataset, but they do give a hierarchy that can be used to choose which clusters to use.</p></li>
+<li><p>They don’t do a good job with outliers. When outliers are found, they can lead to the formation of a new cluster or the merging of two or more clusters.</p></li>
+</ul>
+<p>There are two key concepts in hierarchical clustering:</p>
+<ul>
+<li><p>The bottom-up implementation of this algorithm is described above. Another option is to work from the top down, initially placing all data points in the same cluster before recursively splitting them into their own groups.</p></li>
+<li><p>Clusters are merged based on how near they are to one another.</p></li>
+</ul>
+<p>Here,The Euclidean distance between the points is used to do aglomerative clustering for 4 clusters. Followed by prediction of labels and plotting dendrogram for the data.</p>
+<p>LABELS</p>
+<div class="cell" data-execution_count="19">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co">##  Hierarchical </span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>MyHC <span class="op">=</span> AgglomerativeClustering(n_clusters<span class="op">=</span><span class="dv">4</span>, affinity<span class="op">=</span><span class="st">'euclidean'</span>, linkage<span class="op">=</span><span class="st">'ward'</span>)</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>FIT<span class="op">=</span>MyHC.fit(filename)</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>HC_labels <span class="op">=</span> MyHC.labels_</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(HC_labels)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[2 2 2 ... 3 3 3]</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="20">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co">#plot hierarchical clusters</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize <span class="op">=</span>(<span class="dv">12</span>, <span class="dv">12</span>))</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Hierarchical Clustering'</span>)</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>dendro <span class="op">=</span> hc.dendrogram((hc.linkage(filename, method <span class="op">=</span><span class="st">'ward'</span>)))</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>plt.axhline(y<span class="op">=</span><span class="dv">35000</span>, color<span class="op">=</span><span class="st">'r'</span>, linestyle<span class="op">=</span><span class="st">'--'</span>)</span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Index'</span>)</span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Distance'</span>)</span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<p><img src="ctd_files/figure-html/cell-19-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<p><strong>RESULTS</strong></p>
+<ul>
+<li>From the Kmeans Algorithm, the dataset is 2 groups using the unsupervised k-means algorithm.</li>
+<li>From the DBSCAN Algorithm, the Silhouette Coefficient is 0.069, which means that the clusters are overlapping because the value is near 0.</li>
+<li>From Hierarchical Algorithm, the Euclidean distance method was used to make a dendrogram with k = 4. As can be seen, the clusters are very close to each other. It shows words that go together well, and similar words could be used in different tweets.The red dotted line indicates that the number of cluster is 2.</li>
+</ul>
+<p><strong>CONCLUSION</strong></p>
+<p>From the clusters formed for the #CRIME twitter data, we can say that&nbsp;&nbsp;due to the enormous volume of the data and the possibility of similar words appearing in different tweets, the clusters are overlapping and not defined; however, this situation has room for further improvement.</p>
+
+
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

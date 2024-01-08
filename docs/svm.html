@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.335">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Support Vector Machines FOR TEXT DATA</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+
+</head>
+
+<body class="nav-fixed fullcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./index.html">
+ <span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./introduction.html">
+ <span class="menu-text">Introduction</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://github.com/anly501/anly-501-project-chaishekar/tree/main/code">
+ <span class="menu-text">Code</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://github.com/anly501/anly-501-project-chaishekar/tree/main/data">
+ <span class="menu-text">Data</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./data_gathering.html">
+ <span class="menu-text">Data Gathering</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./data_cleaning.html">
+ <span class="menu-text">Data Cleaning</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./exploring_data.html">
+ <span class="menu-text">Exploring Data</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-naive-bayes" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Naive Bayes</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-naive-bayes">    
+        <li>
+    <a class="dropdown-item" href="./nbrd.html">
+ <span class="dropdown-text">Record Data</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./nbtd.html">
+ <span class="dropdown-text">Text Data</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="./dt.html">
+ <span class="menu-text">Decision Trees</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link active" href="./svm.html" aria-current="page">
+ <span class="menu-text">SVM</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-clustering" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Clustering</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-clustering">    
+        <li>
+    <a class="dropdown-item" href="./crd.html">
+ <span class="dropdown-text">Record Data</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./ctd.html">
+ <span class="dropdown-text">Text Data</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="./arm.html">
+ <span class="menu-text">ARM and Clustering</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./conclusion.html">
+ <span class="menu-text">Conclusion</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Support Vector Machines FOR TEXT DATA</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<p><strong>INTRODUCTION</strong></p>
+<p>On Twitter, a data collection effort for the hashtags “FBI” and “CRIMEUSA” is now being conducted. SVM can be utilized for classification or regression difficulties in this situation. It uses a technique known as the kernel trick to alter your data, and based on these transformations, it identifies the ideal border between the possible outputs.</p>
+<p><strong>ABOUT THE DATA</strong></p>
+<p>The text data is identical to the one used in Naive Bayes. The label text data is derived from the Twitter APIs for #FBI and #USACRIME. The hashtags #USACRIME and #CRIMEUSA are used interchangeably on Twitter to collect data about the use of hostages, as both serve the same purpose.</p>
+<p>IMPORT LIBRARIES</p>
+<div class="cell" data-execution_count="1">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.feature_extraction.text <span class="im">import</span> CountVectorizer, TfidfVectorizer</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> confusion_matrix</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> classification_report, accuracy_score</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.tree <span class="im">import</span> plot_tree</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.utils <span class="im">import</span> resample</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> warnings</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>warnings.filterwarnings(<span class="st">'ignore'</span>)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> cross_val_score</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> cross_val_predict</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.svm <span class="im">import</span> SVC</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> GridSearchCV</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> learning_curve</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.tree <span class="im">import</span> DecisionTreeClassifier</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn <span class="im">import</span> metrics</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> wordcloud <span class="im">import</span> WordCloud, STOPWORDS</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>IMPORT DATA</p>
+<div class="cell" data-execution_count="2">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># READ THE DATA</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>crimeusa_data <span class="op">=</span> pd.read_csv(<span class="st">'../data/raw-data/R_CRIMEUSA_TEXT_DATA.csv'</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>usacrime_data <span class="op">=</span> pd.read_csv(<span class="st">'../data/raw-data/R_USACRIME_TEXT_DATA.csv'</span>)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>fbi_data <span class="op">=</span> pd.read_csv(<span class="st">'../data/raw-data/R_FBI_TEXT_DATA.csv'</span>)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>cleaned_tweet_data <span class="op">=</span> pd.read_csv(<span class="st">'../data/modified-data/cleaned_usacrime_text_data.csv'</span>)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>tweet_fbi_data <span class="op">=</span> pd.read_csv(<span class="st">'../data/modified-data/cleaned_fbi_text_data.csv'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p><strong>DATA CLEANING</strong></p>
+<p>FBI and USA CRIME datasets are combined into one. To assess #crime, the data is purified by deleting all other columns from the dataset, leaving only the text column. Throughout this cleaning operation, Tokenization from the NLTK library and Countvectorizer from the scikit-learn library are both employed.</p>
+<p>The text lemmatization is used for the subsequent step after the data has been cleaned. The technique of collecting together the various inflected forms of a word so that they can be studied as a single item is known as lemmatization. Lemmatization is similar to stemming in that it adds context to words. As a result, it connects words with similar meanings to a single word.</p>
+<div class="cell" data-execution_count="3">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">#MERGE CRIME USA ANDD USA CRIME DATAFRAMES</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>tweet_data_crimeusa <span class="op">=</span> pd.concat([crimeusa_data, usacrime_data], axis<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>tweet_data_crimeusa.head()</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co">#ADD A COLUMN TO THE DATAFRAME</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>tweet_data_crimeusa[<span class="st">'label'</span>] <span class="op">=</span> <span class="st">'USA CRIME'</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>fbi_data[<span class="st">'label'</span>] <span class="op">=</span> <span class="st">'FBI'</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co">#REMOVE RETWEETS</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>tweet_data_crimusa <span class="op">=</span> tweet_data_crimeusa[<span class="op">~</span>tweet_data_crimeusa[<span class="st">'text'</span>].<span class="bu">str</span>.contains(<span class="st">'RT'</span>)]</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>fbi_data <span class="op">=</span> fbi_data[<span class="op">~</span>fbi_data[<span class="st">'text'</span>].<span class="bu">str</span>.contains(<span class="st">'RT'</span>)]</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="co">#MERGE CLEAN TEXT COLUMN FROM CLEANED TWEET DATA WITH THE TWEET DATA</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>tweet_data_crimeusa <span class="op">=</span> pd.merge(tweet_data_crimeusa, cleaned_tweet_data, on<span class="op">=</span><span class="st">'text'</span>, how<span class="op">=</span><span class="st">'left'</span>)</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>fbi_data <span class="op">=</span> pd.merge(fbi_data, tweet_fbi_data, on<span class="op">=</span><span class="st">'text'</span>, how<span class="op">=</span><span class="st">'left'</span>)</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="co">#DROP THE COLUMNS THAT ARE NOT NEEDED</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>tweet_data_crimeusa <span class="op">=</span> tweet_data_crimeusa.drop([<span class="st">'text'</span>,<span class="st">'Tweet_tokenized'</span>,<span class="st">'Tweet_without_stop'</span>,<span class="st">'Tweet_stemmed'</span>], axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>fbi_data <span class="op">=</span> fbi_data.drop([<span class="st">'text'</span>,<span class="st">'Tweet_tokenized'</span>,<span class="st">'Tweet_without_stop'</span>,<span class="st">'Tweet_stemmed'</span>], axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a><span class="co">#REARRANGE THE COLUMNS</span></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>tweet_data_crimeusa.insert(<span class="dv">0</span>, <span class="st">'label'</span>, tweet_data_crimeusa.pop(<span class="st">'label'</span>))</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>tweet_data_crimeusa.insert(<span class="dv">1</span>, <span class="st">'clean text'</span>, tweet_data_crimeusa.pop(<span class="st">'clean text'</span>))</span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>fbi_data.insert(<span class="dv">0</span>, <span class="st">'label'</span>, fbi_data.pop(<span class="st">'label'</span>))</span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>fbi_data.insert(<span class="dv">1</span>, <span class="st">'clean text'</span>, fbi_data.pop(<span class="st">'clean text'</span>))</span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a><span class="co">#RENAME THE CLEAN TEXT COLUMN</span></span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>tweet_data_crimeusa <span class="op">=</span> tweet_data_crimeusa.rename(columns<span class="op">=</span>{<span class="st">'clean text'</span>:<span class="st">'text'</span>})</span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>fbi_data <span class="op">=</span> fbi_data.rename(columns<span class="op">=</span>{<span class="st">'clean text'</span>:<span class="st">'text'</span>})</span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a><span class="co">#MERGE FBI AND USA CRIME DATASETS</span></span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>tweet_data <span class="op">=</span> pd.concat([tweet_data_crimeusa, fbi_data], axis<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a><span class="co">#REMOVE THE COLUMNS THAT ARE NOT NEEDED BEFORE EXPORTING THE DATA</span></span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a><span class="co">#tweet_data = tweet_data.drop(['Tweet_lemmatized'], axis=1)</span></span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a><span class="co"># HEAD OF THE DATA</span></span>
+<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>tweet_data.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="13">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>label</th>
+      <th>text</th>
+      <th>Unnamed: 0</th>
+      <th>favorited</th>
+      <th>favoriteCount</th>
+      <th>replyToSN</th>
+      <th>created</th>
+      <th>truncated</th>
+      <th>replyToSID</th>
+      <th>id</th>
+      <th>replyToUID</th>
+      <th>statusSource</th>
+      <th>screenName</th>
+      <th>retweetCount</th>
+      <th>isRetweet</th>
+      <th>retweeted</th>
+      <th>longitude</th>
+      <th>latitude</th>
+      <th>Tweet_lemmatized</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>USA CRIME</td>
+      <td>Onlyrockradio Donate tiorr internet radio supp...</td>
+      <td>1</td>
+      <td>False</td>
+      <td>1</td>
+      <td>Only_rock_radio</td>
+      <td>2022-10-10 21:56:24</td>
+      <td>True</td>
+      <td>1.579587e+18</td>
+      <td>1579591706663878656</td>
+      <td>4.913321e+09</td>
+      <td>&lt;a href="https://mobile.twitter.com" rel="nofo...</td>
+      <td>SceneCleaners</td>
+      <td>0</td>
+      <td>False</td>
+      <td>False</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>['onlyrockradio', 'donate', 'tiorr', 'internet...</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>USA CRIME</td>
+      <td>Onlyrockradio Donate tiorr internet radio supp...</td>
+      <td>1</td>
+      <td>False</td>
+      <td>1</td>
+      <td>Only_rock_radio</td>
+      <td>2022-10-10 21:56:24</td>
+      <td>True</td>
+      <td>1.579587e+18</td>
+      <td>1579591706663878656</td>
+      <td>4.913321e+09</td>
+      <td>&lt;a href="https://mobile.twitter.com" rel="nofo...</td>
+      <td>SceneCleaners</td>
+      <td>0</td>
+      <td>False</td>
+      <td>False</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>['onlyrockradio', 'donate', 'tiorr', 'internet...</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>USA CRIME</td>
+      <td>Enjoy exciting accounts of realism from the pe...</td>
+      <td>2</td>
+      <td>False</td>
+      <td>0</td>
+      <td>NaN</td>
+      <td>2022-10-10 21:09:40</td>
+      <td>True</td>
+      <td>NaN</td>
+      <td>1579579945655087104</td>
+      <td>NaN</td>
+      <td>&lt;a href="https://mobile.twitter.com" rel="nofo...</td>
+      <td>LaydenRobinson</td>
+      <td>0</td>
+      <td>False</td>
+      <td>False</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>['enjoy', 'exciting', 'account', 'realism', 'p...</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>USA CRIME</td>
+      <td>Enjoy exciting accounts of realism from the pe...</td>
+      <td>2</td>
+      <td>False</td>
+      <td>0</td>
+      <td>NaN</td>
+      <td>2022-10-10 21:09:40</td>
+      <td>True</td>
+      <td>NaN</td>
+      <td>1579579945655087104</td>
+      <td>NaN</td>
+      <td>&lt;a href="https://mobile.twitter.com" rel="nofo...</td>
+      <td>LaydenRobinson</td>
+      <td>0</td>
+      <td>False</td>
+      <td>False</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>['enjoy', 'exciting', 'account', 'realism', 'p...</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>USA CRIME</td>
+      <td>Metaverse Opinion amp Politics USA Trending Cr...</td>
+      <td>3</td>
+      <td>False</td>
+      <td>0</td>
+      <td>NaN</td>
+      <td>2022-10-10 20:21:00</td>
+      <td>True</td>
+      <td>NaN</td>
+      <td>1579567695825190917</td>
+      <td>NaN</td>
+      <td>&lt;a href="https://mobile.twitter.com" rel="nofo...</td>
+      <td>MetaversePosts</td>
+      <td>0</td>
+      <td>False</td>
+      <td>False</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>['metaverse', 'opinion', 'amp', 'politics', 'u...</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+<p><em>LABEL COUNT</em></p>
+<div class="cell" data-execution_count="4">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">#TEXT LEMMATIZED COLUMN</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span>tweet_data[[<span class="st">'label'</span>,<span class="st">'Tweet_lemmatized'</span>]]</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co">#REMOVE PUNCTUATION FROM TEXT LEMMATIZED COLUMN</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>final_tweets<span class="op">=</span>[<span class="bu">str</span>(i).replace(<span class="st">","</span>,<span class="st">""</span>).replace(<span class="st">"["</span>,<span class="st">""</span>).replace(<span class="st">"]"</span>,<span class="st">""</span>).replace(<span class="st">"'"</span>,<span class="st">""</span>) <span class="cf">for</span> i <span class="kw">in</span> df[<span class="st">'Tweet_lemmatized'</span>]]</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co">#ADD THE FINAL TWEETS TO THE DATAFRAME</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'final_tweets'</span>]<span class="op">=</span>final_tweets</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="co">#remove text lemmatized column</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="co">#REMOVE THE COLUMNS</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>df<span class="op">=</span>df.drop(<span class="st">'Tweet_lemmatized'</span>,axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="co">#COUNT THE NUMBER OF FBI AND CRIMEUSA DATA</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> df[<span class="st">'label'</span>].value_counts().plot(kind<span class="op">=</span><span class="st">'bar'</span>,</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>                                    figsize<span class="op">=</span>(<span class="dv">14</span>,<span class="dv">8</span>),</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>                                    title<span class="op">=</span><span class="st">"Number for labels"</span>)</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">"Labels"</span>)</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">"Frequency"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="14">
+<pre><code>Text(0, 0.5, 'Frequency')</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="svm_files/figure-html/cell-5-output-2.png" width="1122" height="733"></p>
+</div>
+</div>
+<p>The bargraph tells us about the count of the labels i.e FBI and USA CRIME.</p>
+<p><strong>SPLIT THE DATASET INTO TRAINING AND TESTING DATASETS</strong></p>
+<p>Before the data is split into training and testing data, it is scaled and labeled, with label encoding referring to turning the labels into a numeric form so that they can be machine-readable.</p>
+<div class="cell" data-execution_count="5">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">#SEPARATE THE DATA INTO MAJORITY AND MINORITY CLASSES</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>df_majority <span class="op">=</span> df[df.label<span class="op">==</span><span class="st">'FBI'</span>]</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>df_minority <span class="op">=</span> df[df.label<span class="op">==</span><span class="st">'USA CRIME'</span>]</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="co">#DOWN SAMPLE THE MAJORITY CLASS</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>df_majority_downsampled <span class="op">=</span> resample(df_majority, </span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>                                 replace<span class="op">=</span><span class="va">False</span>,    <span class="co"># sample without replacement</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>                                 n_samples<span class="op">=</span><span class="bu">len</span>(df_minority),     <span class="co"># to match minority class</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>                                 random_state<span class="op">=</span><span class="dv">123</span>) <span class="co"># reproducible results</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="co">#COMBINE THE MINORITY AND DOWNSAMPLED MAJORITY CLASSES</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>df_downsampled <span class="op">=</span> pd.concat([df_majority_downsampled, df_minority])</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a><span class="co">#DISPLAY THE NUMBER OF DATA FOR EACH LABEL</span></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>value_count <span class="op">=</span> df_downsampled.label.value_counts()</span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>X<span class="op">=</span>df_downsampled[<span class="st">'final_tweets'</span>].values</span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>y<span class="op">=</span>df_downsampled[<span class="st">'label'</span>].values</span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a><span class="co">#LABEL ENCODING</span></span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> LabelEncoder</span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>labelencoder <span class="op">=</span> LabelEncoder()</span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> labelencoder.fit_transform(y)</span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> random <span class="im">as</span> rd</span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>MyCV_content <span class="op">=</span> CountVectorizer(<span class="bu">input</span><span class="op">=</span><span class="st">'content'</span>, stop_words<span class="op">=</span><span class="st">'english'</span>)</span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a>My_DTM2 <span class="op">=</span> MyCV_content.fit_transform(X)</span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a>ColNames <span class="op">=</span> MyCV_content.get_feature_names_out()  <span class="co"># Use get_feature_names_out()</span></span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a>My_DF_content <span class="op">=</span> pd.DataFrame(My_DTM2.toarray(), columns<span class="op">=</span>ColNames)</span>
+<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a><span class="co">#SPLIT THE DATA INTO TRAIN AND </span><span class="al">TEST</span></span>
+<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a>My_DF_content[<span class="st">'LABEL'</span>] <span class="op">=</span> pd.DataFrame(y,columns<span class="op">=</span>[<span class="st">'LABEL'</span>])</span>
+<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a>rd.seed(<span class="dv">1993</span>)</span>
+<span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a>TrainDF, TestDF <span class="op">=</span> train_test_split(My_DF_content, test_size<span class="op">=</span><span class="fl">0.25</span>)</span>
+<span id="cb6-38"><a href="#cb6-38" aria-hidden="true" tabindex="-1"></a>TrainLabels<span class="op">=</span>TrainDF[<span class="st">"LABEL"</span>]</span>
+<span id="cb6-39"><a href="#cb6-39" aria-hidden="true" tabindex="-1"></a>TestLabels<span class="op">=</span>TestDF[<span class="st">"LABEL"</span>]</span>
+<span id="cb6-40"><a href="#cb6-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-41"><a href="#cb6-41" aria-hidden="true" tabindex="-1"></a>TrainDF <span class="op">=</span> TrainDF.drop([<span class="st">"LABEL"</span>], axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb6-42"><a href="#cb6-42" aria-hidden="true" tabindex="-1"></a>TestDF <span class="op">=</span> TestDF.drop([<span class="st">"LABEL"</span>], axis<span class="op">=</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p><strong>SUPPORT VECTOR MACHINE(SVM)</strong></p>
+<p>A support vector machine, often known as an SVM, is a type of supervised machine learning model that solves problems involving two groups of categorization by employing classification techniques. When an SVM model is provided with sets of labeled training data for each category, the model is then able to classify newly encountered text.</p>
+<p>When compared to more recent algorithms such as neural networks, they have two primary advantages: increased speed and improved performance with a constrained quantity of data points (in the thousands). Because of this, the approach is ideally suited for solving problems involving the classification of text, which often involve having access to datasets containing no more than a few thousand annotated examples at most.</p>
+<div class="cell" data-execution_count="6">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> svc_param_selection(X, y,k):</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    Cs <span class="op">=</span> [ <span class="fl">.01</span>, <span class="dv">1</span>, <span class="dv">5</span>, <span class="dv">10</span>]</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    param_grid <span class="op">=</span> {<span class="st">'C'</span>: Cs}</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    grid_search <span class="op">=</span> GridSearchCV(SVC(kernel<span class="op">=</span>k), param_grid)</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    grid_search.fit(X, y)</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    grid_search.best_params_</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> grid_search.best_params_</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p><strong>SVM with LINEAR KERNELS</strong></p>
+<p>When data is Linearly separable, meaning it can be partitioned along a straight line, a Linear Kernel is applied. It is one of the kernels that is utilized the most frequently. Its primary application occurs in situations where a given data set contains a significant number of features.</p>
+<p>To be more specific, the svc() function can be utilized to fit a support vector classifier provided that the argument kernel = “linear” is utilized. This function implements the support vector classifier with a slightly modified version of the standard formulation. With the use of a cost argument, we are able to indicate the amount of money lost due to a margin violation. When the cost argument is low, the margins will be broad, and a significant number of support vectors will either be on the margin or will violate it. When the cost argument is significant, then the margins will be low, and there will be a small number of support vectors that are either on the margin or that violate the margin. Utilizing the svc() method allows us to tailor the support vector classifier to the value that has been supplied for the cost parameter, which is denoted by the letter ‘C’. For this model, the cost margin is taken as 0.5 and besides that we perform supervised machine learning (classification) on categorical data, we often use a confusion matrix to get the count of accurate and inaccurate predictions for different classes.</p>
+<div class="cell" data-execution_count="7">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">#set seed</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">26</span>)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co">#SVM MODEL WITH LINEAR KERNEL</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co">#GETTING THE BEST COST MARGIN</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>svc_param_selection(TrainDF, TrainLabels,<span class="st">"linear"</span>)</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="co">#PREDICT THE </span><span class="al">TEST</span><span class="co"> DATA</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>SVM_Model<span class="op">=</span>SVC(kernel<span class="op">=</span><span class="st">'linear'</span>, C<span class="op">=</span><span class="fl">0.5</span>, probability<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>SVM_Model.fit(TrainDF, TrainLabels)</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>Preds_SVM1 <span class="op">=</span> SVM_Model.predict(TestDF)</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>Pred_Proba_SVM1 <span class="op">=</span> SVM_Model.predict_proba(TestDF)</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>SVM_matrix <span class="op">=</span> confusion_matrix(TestLabels, Preds_SVM1)</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(metrics.classification_report(TestLabels, Preds_SVM1))</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a><span class="co">#VISUALIZE THE CONFUSION MATRIX</span></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>,<span class="dv">10</span>))</span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>labels <span class="op">=</span> [<span class="st">'CRIME USA'</span>, <span class="st">'FBI'</span>]</span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>ax1<span class="op">=</span>plt.subplot()</span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>sns.heatmap(confusion_matrix(TestLabels, Preds_SVM1), annot<span class="op">=</span><span class="va">True</span>, fmt<span class="op">=</span><span class="st">'g'</span>, ax<span class="op">=</span>ax1)</span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a><span class="co">#LABELS, TITLE AND TICKS</span></span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>ax1.set_xlabel(<span class="st">'Predicted labels'</span>)<span class="op">;</span>ax1.set_ylabel(<span class="st">'True labels'</span>)</span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>ax1.set_title(<span class="st">'Confusion Matrix'</span>)</span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>ax1.xaxis.set_ticklabels(labels)</span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>ax1.yaxis.set_ticklabels(labels)</span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a>plt.close()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>              precision    recall  f1-score   support
+
+           0       1.00      0.99      0.99       251
+           1       0.99      1.00      0.99       244
+
+    accuracy                           0.99       495
+   macro avg       0.99      0.99      0.99       495
+weighted avg       0.99      0.99      0.99       495
+</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="svm_files/figure-html/cell-8-output-2.png" width="764" height="819"></p>
+</div>
+</div>
+<p><em>INFERENCE:</em></p>
+<p>From the SVM model with Linear Kernel for the Cost margin of 0.5, the classification report says that the accuracy of the model is 99%. The precision of the model is 99%, the recall is 98% and the F1 Score is 99%. The model is not overfitting as the precision and recall values are the same. The model is not underfitting because the accuracy of the model is greater than 50%. The model is not biased because the precision and recall are the same.</p>
+<p><strong>POLYNOMIAL KERNEL with SVM</strong></p>
+<p>Polynomial Kernel depicts the degree of similarity between vectors in the training set of data in a feature space over polynomials of the variables that were initially employed in the kernel.The polynomial kernel is a kernel function in machine learning that is commonly used with support vector machines (SVMs) and other kernelized models to represent the similarity of vectors (training samples) in a feature space over polynomials of the original variables and facilitate the learning of non-linear models.</p>
+<p>To be more explicit, if the input kernel = “poly” is used with the svc() function, a support vector classifier can be fitted. By presenting the cost of a margin violation, we may give an approximate idea of the financial damage it causes. By calling the svc() function, we can adjust the support vector classifier to the value of the cost argument (denoted by the letter C). Since we are performing supervised machine learning (classification) on categorical data, we frequently use a confusion matrix to determine the count of accurate and inaccurate predictions for distinct classes; in this model, we set the cost margin to 0.5.</p>
+<div class="cell" data-execution_count="8">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co">#set seed</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">2</span>)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="co">#POLYNOMIAL KERNEL MODEL</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co">#GETTING THE BEST COST MARGIN</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>svc_param_selection(TrainDF, TrainLabels,<span class="st">"poly"</span>)</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="co">#POLY KERNAL, C = 0.5</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>SVM_Model2<span class="op">=</span>SVC(kernel<span class="op">=</span><span class="st">'poly'</span>, C<span class="op">=</span><span class="fl">0.5</span>,probability<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>SVM_Model2.fit(TrainDF, TrainLabels)</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>Preds_SVM2 <span class="op">=</span> SVM_Model2.predict(TestDF)</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>Pred_Proba_SVM2 <span class="op">=</span> SVM_Model2.predict_proba(TestDF)</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>SVM_matrix <span class="op">=</span> confusion_matrix(TestLabels, Preds_SVM2)</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(metrics.classification_report(TestLabels, Preds_SVM2))</span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a><span class="co">#VISCALIZE THE CONFUSION MATRIX</span></span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>,<span class="dv">10</span>))</span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>labels <span class="op">=</span> [<span class="st">'CRIME USA'</span>, <span class="st">'FBI'</span>]</span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>ax1<span class="op">=</span>plt.subplot()</span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>sns.heatmap(confusion_matrix(TestLabels, Preds_SVM2), annot<span class="op">=</span><span class="va">True</span>, fmt<span class="op">=</span><span class="st">'g'</span>, ax<span class="op">=</span>ax1)</span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a><span class="co">#LABELS, TITLE AND TICKS</span></span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a>ax1.set_xlabel(<span class="st">'Predicted labels'</span>)<span class="op">;</span>ax1.set_ylabel(<span class="st">'True labels'</span>)</span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a>ax1.set_title(<span class="st">'Confusion Matrix'</span>)</span>
+<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a>ax1.xaxis.set_ticklabels(labels)</span>
+<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a>ax1.yaxis.set_ticklabels(labels)</span>
+<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a>plt.close()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>              precision    recall  f1-score   support
+
+           0       1.00      1.00      1.00       251
+           1       1.00      1.00      1.00       244
+
+    accuracy                           1.00       495
+   macro avg       1.00      1.00      1.00       495
+weighted avg       1.00      1.00      1.00       495
+</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="svm_files/figure-html/cell-9-output-2.png" width="764" height="819"></p>
+</div>
+</div>
+<p><em>INFERENCE:</em></p>
+<p>From the SVM model with Polynomial Kernel for the Cost margin of 0.5, the classification report says that the accuracy of the model is 96%. The precision of the model is 97%, the recall is 96% and the F1 Score is 96%. In this model precision is greater than accuaracy which tells us that precision is independent of accurary. The model is not underfitting because the accuracy of the model is greater than 50%. The model is not imbalanced because the number of data for each label is the same.</p>
+<p><strong>SVM with RBF KERNELS</strong></p>
+<p>RBF kernels are the most generalized kind of kernelization. They are also one of the most often used kernels because of their resemblance to the Gaussian distribution, which is one of the most common distributions. It is a kernel that can be used for a variety of applications and is utilized in circumstances in which there is no prior information about the data. Specifically, it is used in cases where there is no prior knowledge about the data.</p>
+<p>To be more explicit, if the input kernel = “rbf” is used with the svc() function, a support vector classifier can be fitted. By presenting the cost of a margin violation, we may give an approximate idea of the financial damage it causes. By calling the svc() function, we can adjust the support vector classifier to the value of the cost argument (denoted by the letter C). Since we are performing supervised machine learning (classification) on categorical data, we frequently use a confusion matrix to determine the count of accurate and inaccurate predictions for distinct classes; in this model, we set the cost margin to 0.5.</p>
+<div class="cell" data-execution_count="9">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co">#set seed</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">2</span>)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="co">#RBF MODEL</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co">#GETTING THE BEST COST MARGIN</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>svc_param_selection(TrainDF, TrainLabels,<span class="st">"rbf"</span>)</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="co"># RBF Kernal - C = 0.5</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>SVM_Model3<span class="op">=</span>SVC(kernel<span class="op">=</span><span class="st">'rbf'</span>, C<span class="op">=</span><span class="fl">0.5</span>,probability<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>SVM_Model3.fit(TrainDF, TrainLabels)</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>Preds_SVM3 <span class="op">=</span> SVM_Model3.predict(TestDF)</span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>Pred_Proba_SVM3 <span class="op">=</span> SVM_Model3.predict_proba(TestDF)</span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>SVM_matrix3 <span class="op">=</span> confusion_matrix(TestLabels, Preds_SVM3)</span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(metrics.classification_report(TestLabels, Preds_SVM3))</span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a><span class="co">#VISUALIZE THE CONFUSION MATRIX</span></span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>,<span class="dv">10</span>))</span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>labels <span class="op">=</span> [<span class="st">'CRIME USA'</span>, <span class="st">'FBI'</span>]</span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a>ax1<span class="op">=</span>plt.subplot()</span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a>sns.heatmap(confusion_matrix(TestLabels, Preds_SVM3), annot<span class="op">=</span><span class="va">True</span>, fmt<span class="op">=</span><span class="st">'g'</span>, ax<span class="op">=</span>ax1)</span>
+<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a><span class="co">#LABELS, TITLE AND TICKS</span></span>
+<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a>ax1.set_xlabel(<span class="st">'Predicted labels'</span>)<span class="op">;</span>ax1.set_ylabel(<span class="st">'True labels'</span>)</span>
+<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a>ax1.set_title(<span class="st">'Confusion Matrix'</span>)</span>
+<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a>ax1.xaxis.set_ticklabels(labels) </span>
+<span id="cb12-26"><a href="#cb12-26" aria-hidden="true" tabindex="-1"></a>ax1.yaxis.set_ticklabels(labels)</span>
+<span id="cb12-27"><a href="#cb12-27" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb12-28"><a href="#cb12-28" aria-hidden="true" tabindex="-1"></a>plt.close()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>              precision    recall  f1-score   support
+
+           0       0.96      0.99      0.98       251
+           1       0.99      0.96      0.98       244
+
+    accuracy                           0.98       495
+   macro avg       0.98      0.98      0.98       495
+weighted avg       0.98      0.98      0.98       495
+</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="svm_files/figure-html/cell-10-output-2.png" width="764" height="819"></p>
+</div>
+</div>
+<p><em>INFERENCE:</em></p>
+<p>From the SVM model with RBF Kernel for the Cost margin of 0.5, the classification report says that the accuracy of the model is 99%. The precision of the model is 99%, the recall is 99% and the F1 Score is 99%. The model is not overfitting as the precision and recall values are the same. The model is not underfitting because the accuracy of the model is greater than 50%. The model is not biased because the precision and recall are the same.</p>
+<p><strong>CONCLUSION</strong></p>
+<p>The SVM model was used to classify tweets that were generated from Twitter into the respective hashtag classes (FBI and USA CRIME) of other tweets. When it comes to determining the category, the models have an accuracy ranging from 96% to 99%, which is considered to be rather high. The model is able to make predictions about the tweets or to categorize them into different groups thanks to the collection of terms. The linear model and RBF Kernel model are the most appropriate representations of these data since they account for 99% of the variance.</p>
+
+
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

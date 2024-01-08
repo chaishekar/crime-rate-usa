@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.335">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>nbtd</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+</head>
+
+<body style="background-color: black;" class="nav-fixed fullcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./index.html">
+ <span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./introduction.html">
+ <span class="menu-text">Introduction</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://github.com/anly501/anly-501-project-chaishekar/tree/main/code">
+ <span class="menu-text">Code</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://github.com/anly501/anly-501-project-chaishekar/tree/main/data">
+ <span class="menu-text">Data</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./data_gathering.html">
+ <span class="menu-text">Data Gathering</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./data_cleaning.html">
+ <span class="menu-text">Data Cleaning</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./exploring_data.html">
+ <span class="menu-text">Exploring Data</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-naive-bayes" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Naive Bayes</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-naive-bayes">    
+        <li>
+    <a class="dropdown-item" href="./nbrd.html">
+ <span class="dropdown-text">Record Data</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./nbtd.html">
+ <span class="dropdown-text">Text Data</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="./dt.html">
+ <span class="menu-text">Decision Trees</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./svm.html">
+ <span class="menu-text">SVM</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-clustering" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Clustering</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-clustering">    
+        <li>
+    <a class="dropdown-item" href="./crd.html">
+ <span class="dropdown-text">Record Data</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./ctd.html">
+ <span class="dropdown-text">Text Data</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="./arm.html">
+ <span class="menu-text">ARM and Clustering</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./conclusion.html">
+ <span class="menu-text">Conclusion</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+
+
+
+
+
+
+
+
+
+<meta charset="utf-8">
+<meta name="generator" content="pandoc">
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE">
+   <!-- point to css stylesheet -->
+   <link rel="stylesheet" href="../styles.css">
+
+   
+  
+  
+  
+  <style>
+  
+  body {
+    font-family: 'Times New Roman';
+      background-color : white ;
+      position : relative
+      style: #232435;
+  
+  }
+  
+  
+  .navbar{
+      top:0;
+      position: fixed;
+      width : 100%;
+      
+  }
+  
+  .topnav {
+    overflow: hidden;
+    background-color: black;
+  }
+  
+  .topnav a {
+    float: left;
+    color: white;
+    text-align: center;
+    padding: 12px 14px;
+    text-decoration: none;
+    font-size: 17px;
+  }
+  
+  .topnav a:hover {
+    background-color: black;
+    color: white;
+  }
+  
+  .topnav a.active {
+    background-color: black;
+    color: black;
+  }
+  
+  .headerLogo{
+    top:200px;
+    height:250px;
+    width:200px;
+    line-height:200px;
+  
+    overflow:hidden;
+   
+    <!-- top:200px; height:900px; width:1450px; line-height:500px -->
+  }
+  .center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+  }
+  
+  h1 {text-align: left;}
+  p {text-align: left;}
+  div {text-align: left;}
+  
+  
+  ul {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      background-color: white;
+      max-width:1500px;
+  }
+  
+  li {
+      float: left;
+  }
+  
+  li a, .dropbtn {
+      display: inline-block;
+      color: black;
+      text-align: center;
+      padding: 14px 16px;
+      text-decoration: none;
+  }
+  
+  li a:hover, .dropdown:hover .dropbtn {
+      background-color: grey;
+  }
+  
+  li.dropdown {
+      display: inline-block;
+  }
+  
+  .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: white;
+      min-width: 160px;
+      
+      
+  }
+  
+  .dropdown-content a {
+      color: black;
+      padding: 12px 16px;
+      text-decoration: none;
+      display: block;
+      text-align: left;
+      
+  }
+  
+  
+  
+  .dropdown:hover .dropdown-content {
+      display: block;
+      opacity: 1;
+  }
+  td {
+      padding: 5px;
+      text-align: left;
+      width: 500px;
+  }
+  
+  tr{
+     padding: 0px;
+     text-align: top;
+     background-color:#ffffff
+  }
+  
+  img:hover {
+    opacity: 1;
+  }
+  
+  </style>
+  
+  
+  
+  
+  
+  <div class="w3-container w3-border city" id="Naive Bayes">
+  <br>
+  <br>
+  
+ 
+  
+  <style>
+  
+  th, td {
+    border: 1px solid black;
+  }
+  .center {
+    margin-left: auto;
+    margin-right: auto;
+  }
+  </style>
+  
+    
+    
+    <!-- code folding -->
+    
+    
+
+  <title>NAIVE BAYES FOR TEXT DATA</title>
+  <div class="content" style="margin: 10px;">
+    <div style="margin-left: 10px; margin-right: 10px;">
+    <h1 style="color:white"><b>NAIVE BAYES FOR TEXT DATA</b></h1> 
+    <h2 style="color:white" class="anchored"><b>INTRODUCTION</b></h2> 
+    <p style="color:white">Naive Bayes is a classification method based on Bayes' Theorem and the assumption of predictor independence. A Naive Bayes classifier posits, in simple terms, that the existence of one feature in a class is independent to the presence of other features.</p>
+    <p style="color:white"> The Naive Bayes model is simple to construct and especially suitable for extremely big data sets. In addition to its simplicity, Naive Bayes is known to outperform even the most complex classification techniques.</p>
+    <h3 style="color:white" class="anchored"><b>Assumption for Naive Bayes: </b></h3>
+    <p style="color:white"> The Naive Bayes algorithm makes the assumption that the predictors are independent of each other. In real life, it is almost impossible that we get a set of predictors which are completely independent. </p>
+    <h3 style="color:white" class="anchored"><b>Types&nbsp;of Naive Bayes Classifier:</b></h3>
+    <h4 style="color:white" class="anchored"> ● Multinomial Naive Bayes:</h4>
+    <p style="color:white"> This is mostly used to determine how to place a document into a certain category, such as sports, politics, technology, etc. The frequency of the words in the document is one of the things that the classifier looks at.</p>
+    <h4 style="color:white" class="anchored">● Bernoulli Naive Bayes:</h4>
+    <p style="color:white"> This is comparable to the multinomial naive bayes model, with the exception that the predictors are boolean variables. The parameters that we use to predict the class variable take on simply yes or no values, such as whether or not a word appears in the text.</p>
+    <h4 style="color:white" class="anchored">● Gaussian Naive Bayes:</h4>
+    <p style="color:white"> When predictors have continuous values and are not discrete, these values are assumed to be drawn from a Gaussian distribution.</p>
+    <h3 style="color:white" class="anchored"><b>Advantages of Naive Bayes</b></h3>
+    <p style="color:white">● This algorithm is efficient and can save a great deal of time.</p>
+    <p style="color:white">● The Naive Bayes method can be used to solve multiclass prediction issues.</p>
+    <p style="color:white">● If the model's assumption on the independence of characteristics remains true, it can outperform competing models and requires significantly less training data.</p>
+    <p style="color:white">● The Naive Bayes algorithm is more suitable for category input variables than numerical ones.</p>
+    <h3 style="color:white" class="anchored"><b>Disadvantages of Naive Bayes</b></h3>
+    <p style="color:white">● Naive Bayes assumes that all predictors (or features) are independent, which rarely happens in real life. This makes it harder for this algorithm to be used in the real world.</p>
+    <p style="color:white">● The "zero-frequency problem" is when this algorithm gives a probability of 0 to a categorical variable whose category in the test data set wasn't in the training data set. The best way to solve this problem would be to use a smoothing method.</p>
+    <p style="color:white">● Its estimations can be wrong in some cases, so you shouldn’t take its probability outputs very seriously. </p>
+    <br>            
+
+    <h2 style="color:white" class="anchored"><b>ABOUT THE DATA</b></h2>
+    <p style="color:white"> The label text data is gathered from the #FBI and #USACRIME Twitter APIs. The #USACRIME and #CRIMEUSA hashtags are used interchangeably for the collecting of data regarding the use of hostages on Twitter, as both have the same purpose.The purpose of gathering this text data was to determine the public's view of the FBI and crime-related tweets in the United States.</p>
+    <br>
+    <h2 style="color:white" class="anchored"><b>DATA CLEANING AND VISUALISATION</b></h2>
+    <p style="color:white">Python is used to clean up textual data from Twitter. Only the text column remained in the dataset after all other columns were eliminated in order to analyze #crime. During this cleaning procedure, both Tokenization from the NLTK library and Countvectorizer from the scikit-learn library are utilized.</p>
+    <p style="color:white">To provide a concise summary of the data, a wordcloud of both hashtags has been created.</p>
+    </div>
+    <style>
+        table, th, td {
+          border: 1px solid black;
+        }
+        table.center {
+          margin-left: auto;
+          margin-right: auto;
+        }
+        </style>
+   
+    <table style="width:100%">
+      <tbody>
+        <tr>
+          <td width="50%"><center><img alt="fbi_data" height="500px" src="./images/CLEANED_FBI_TEXT_DATA.png" width="550px"></center>
+          <br>
+          <center><a href="./images/CLEANED_FBI_TEXT_DATA.png" target="new">View </a></center>
+                <center><a href="https://github.com/anly501/anly-501-project-chaishekar/tree/main/data/modified-data/cleaned_fbi_text_data.csv">FBI CSV file</a></center>
+          <a href="./images/CLEANED_FBI_TEXT_DATA.png" target="new"> </a>
+          <br>
+          </td><td width="50%"><center><img alt="fbi_data_wordcloud" height="500px" src="./images/VISUALISATION_FBI_WORDCLOUD_TEXT_DATA.png" width="550px"></center>
+            <br>
+            <center><a href="./images/VISUALISATION_FBI_WORDCLOUD_TEXT_DATA.png" target="new">View </a></center>
+            <center><a href="https://github.com/anly501/anly-501-project-chaishekar/tree/main/code/exploring data/VISUALISATION_TWITTER_FBI_DATA.html" target="new">Data Cleaning and Visualization HTML File </a></center>
+            <a href="./images/VISUALISATION_FBI_WORDCLOUD_TEXT_DATA.png" target="new"> </a>
+            <br>
+
+        </td></tr>
+    
+        <tr>
+            <td width="50%"><center><img alt="usacrime" height="500px" src="./images/CLEANED_USACRIME_TEXT_DATA.png" width="550px"></center>
+                <br>
+                <center><a href="./images/CLEANED_USACRIME_TEXT_DATA.png" target="new">View </a></center>
+                      <center><a href="https://github.com/anly501/anly-501-project-chaishekar/tree/main/data/modified-data/cleaned_usacrime_text_data.csv">USA Crime CSV file</a></center>
+                <a href="./images/CLEANED_USACRIME_TEXT_DATA.png" target="new"> </a>
+            <br>
+            </td>
+            <td width="50%"><center><img alt="fbi_data_wordcloud" height="500px" src="./images/VISUALISATION_USACRIME_WORDCLOUD_TEXT_DATA.png"></center>
+              <br>
+              <center><a href="./images/VISUALISATION_USACRIME_WORDCLOUD_TEXT_DATA.png" target="new">View </a></center>
+              <center><a href="https://github.com/anly501/anly-501-project-chaishekar/tree/main/code/exploring data/VISUALISATION_TWITTER_CRIMEUSA_DATA.html" target="new">Data Cleaning and Visualization HTML File </a></center>
+              <a href="./images/VISUALISATION_USACRIME_WORDCLOUD_TEXT_DATA.png" target="new"> </a>
+            <br>
+              </td>
+  
+            </tr>
+
+        </tbody>
+        </table>
+        <div style="margin-left: 10px; margin-right: 10px;">
+        <h2 style="color:white" class="anchored"><b>MODEL BUILDING</b></h2>
+        <p style="color:white">The code can be found here <a href="https://github.com/anly501/anly-501-project-chaishekar/tree/main/code/naive bayes/naivebayes_text_data.html" target="_blank">here</a> </p>
+        <p style="color:white">Before constructing a model, the dataset is divided into training and testing sets. The split ratio is 0.75 of the total number of data in the training set and 0.25 of the total number of data in the testing set. There are three distinct naive Bayes models built. The Naive Bayes models vary depending to the hypertuning of various parameters. primarily alpha values</p>
+        <h3 style="color:white" class="anchored"><b>Naive Bayes Model 1</b></h3>
+        <p style="color:white"> The first model is built with the default parameters. The default parameters are alpha = 1.0 and fit_prior = True. The model is built with the training set and the accuracy of the model is calculated with the testing set. The accuracy of the model is 0.75. </p>
+        <p style="color:white">The snapshot of the accuracy/heatmap is attached below.</p>
+        <center><img alt=".jpg" height="400px" src="./images/NB_APLA1_TEXT_DATA.png" width="600px"></center>
+        <h3 style="color:white" class="anchored"><b>Naive Bayes Model 2</b></h3>
+        <p style="color:white">This is the second naive bayes model. In this model, the hyperparameter are alpha = 5. In this model, the accuracy is 95%. </p>
+        <p style="color:white">The snapshot of the accuracy/heatmap is attached below.</p>
+        <center><img alt=".jpg" height="400px" src="./images/NB_ALPHA2_TEXT_DATA.png" width="600px"></center>
+        <h3 style="color:white" class="anchored"><b>Naive Bayes Model 3</b></h3>
+        <p style="color:white">This is the third naive bayes model. In this model, the hyperparameter are alpha = 0. In this model, the accuracy is 94%.</p>
+        <p style="color:white">The snapshot of the accuracy/heatmap is attached below.</p>
+        <center><img alt=".jpg" height="400px" src="./images/NB_ALPHA3_TEXT_DATA.png" width="600px"></center>
+        <div style="margin-left: 10px; margin-right: 10px;">
+        <h2 style="color:white" class="anchored"><b>CONCLUSION</b></h2>
+        <p style="color:white">The Naive Bayes model classified tweets generated from Twitter into the hashtag class (FBI and USACRIME) of different tweets. The accuracy of the models are 96% and 95%. The accuracy is pretty high. With the collection of words, the model is able to predict or classify the tweets into particular classes.</p>
+        </div>
+
+            
+         
+
+
+
+
+
+</div></div></div></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
